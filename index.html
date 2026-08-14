@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GeePlays — Discover. Explore. Play.</title>
+<meta name="description" content="GeePlays is a gaming discovery hub — browse games, check requirements, view screenshots, watch gameplay, and find where to get them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<header class="navbar">
+  <div class="container navbar-inner">
+    <a href="./index.html" class="logo">GeePlays<span class="accent-dot">.</span></a>
+    <nav class="nav-links">
+      <a href="./index.html">Home</a>
+      <a href="./games.html">Games</a>
+      <a href="./news.html">News</a>
+      <a href="./about.html">About</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" data-search-trigger aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+      <a href="./games.html" class="btn btn-primary btn-sm">Explore</a>
+      <button class="icon-btn hamburger" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile menu -->
+<div class="mobile-menu">
+  <button class="icon-btn mobile-close" aria-label="Close menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+  <a href="./index.html">Home</a>
+  <a href="./games.html">Games</a>
+  <a href="./news.html">News</a>
+  <a href="./about.html">About</a>
+</div>
+
+<!-- Search overlay -->
+<div class="search-overlay">
+  <div class="search-panel">
+    <form data-search-form>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" placeholder="Search games, genres, developers…" data-search-input autocomplete="off">
+      <button type="button" class="icon-btn btn-sm" data-search-close aria-label="Close search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </form>
+    <div class="search-hint">Press Enter to search · Esc to close</div>
+  </div>
+</div>
+
+<main>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow">Discover. Explore. Play.</span>
+        <h1 class="hero-title">Find your next<br><span class="grad">obsession.</span></h1>
+        <p class="hero-copy">Browse games, check system requirements, flip through screenshots, and watch real gameplay — then head straight to the official store to get it.</p>
+        <div class="hero-actions">
+          <a href="./games.html" class="btn btn-primary">Explore Games</a>
+          <a href="./games.html#genres" class="btn btn-ghost">Browse Categories</a>
+        </div>
+      </div>
+      <div class="hero-shelf" aria-hidden="true">
+        <div class="shelf-track" id="heroShelf"></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Featured Games -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Handpicked</span>
+          <h2 class="section-title">Featured Games</h2>
+        </div>
+        <a href="./games.html" class="btn btn-outline btn-sm">View All</a>
+      </div>
+      <div class="game-grid" id="featuredGrid">
+        <div class="skeleton" style="aspect-ratio:3/4"></div>
+        <div class="skeleton" style="aspect-ratio:3/4"></div>
+        <div class="skeleton" style="aspect-ratio:3/4"></div>
+        <div class="skeleton" style="aspect-ratio:3/4"></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Browse by Genre -->
+  <section class="section" id="genres">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Pick a lane</span>
+          <h2 class="section-title">Browse by Genre</h2>
+        </div>
+      </div>
+      <div class="chip-row" id="genreChips"></div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Latest Games -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Fresh adds</span>
+          <h2 class="section-title">Latest Games</h2>
+        </div>
+        <a href="./games.html" class="btn btn-outline btn-sm">View All</a>
+      </div>
+      <div class="game-grid" id="latestGrid">
+        <div class="skeleton" style="aspect-ratio:3/4"></div>
+        <div class="skeleton" style="aspect-ratio:3/4"></div>
+        <div class="skeleton" style="aspect-ratio:3/4"></div>
+        <div class="skeleton" style="aspect-ratio:3/4"></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Why GeePlays -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">The short version</span>
+          <h2 class="section-title">Why GeePlays?</h2>
+        </div>
+      </div>
+      <div class="feature-row">
+        <div class="feature-item fade-in">
+          <div class="fi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div>
+          <h4>Discover games</h4>
+          <p>Browse a growing catalog across every genre.</p>
+        </div>
+        <div class="feature-item fade-in">
+          <div class="fi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 20h8"/></svg></div>
+          <h4>Check requirements</h4>
+          <p>See minimum and recommended specs before you buy.</p>
+        </div>
+        <div class="feature-item fade-in">
+          <div class="fi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg></div>
+          <h4>Explore screenshots</h4>
+          <p>Flip through galleries before committing your time.</p>
+        </div>
+        <div class="feature-item fade-in">
+          <div class="fi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 3 14 9-14 9V3z"/></svg></div>
+          <h4>Watch gameplay</h4>
+          <p>Real trailers and footage, embedded right on the page.</p>
+        </div>
+        <div class="feature-item fade-in">
+          <div class="fi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2Z"/></svg></div>
+          <h4>Find external sources</h4>
+          <p>Every "Get Game" button links straight to the official store.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+  <!-- Support Gee -->
+  <section class="section" id="supportSection">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Support</span>
+          <h2 class="section-title" id="supportTitle">Support Gee</h2>
+        </div>
+      </div>
+      <div id="supportContent">
+        <p id="supportIntro"></p>
+        <div id="mobileMoneyList" class="support-list"></div>
+        <div id="bankDetails" class="support-list"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="./index.html" class="logo">GeePlays<span class="accent-dot">.</span></a>
+        <p>A gaming discovery hub. Browse, learn, and find where to get your next game — GeePlays never hosts installers or game files.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Site</h5>
+        <ul>
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./games.html">Games</a></li>
+          <li><a href="./news.html">News</a></li>
+          <li><a href="./about.html">About</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Genres</h5>
+        <ul>
+          <li><a href="./games.html?genre=Action">Action</a></li>
+          <li><a href="./games.html?genre=RPG">RPG</a></li>
+          <li><a href="./games.html?genre=Strategy">Strategy</a></li>
+          <li><a href="./games.html?genre=Horror">Horror</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" id="footer-contacts">
+        <h5>Contact</h5>
+        <ul id="footerContactsList">
+          <!-- Populated from data/support.json -->
+        </ul>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="footer-bottom" style="margin-top:20px;">
+      <span>© <span data-year></span> GeePlays. All game titles and assets belong to their respective owners.</span>
+      <span>Discover. Explore. Play.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="./js/script.js"></script>
+<script src="./js/support.js"></script>
+<script>
+  (async function initHome() {
+    const games = await loadGames();
+
+    // Hero shelf (duplicate list for seamless scroll loop)
+    const shelf = document.getElementById("heroShelf");
+    const shelfGames = games.slice(0, 6);
+    [...shelfGames, ...shelfGames, ...shelfGames].forEach(g => {
+      const item = document.createElement("div");
+      item.className = "shelf-card";
+      item.appendChild(buildCoverEl(g.cover, g.title, "shelf-cover"));
+      const info = document.createElement("div");
+      info.className = "shelf-info";
+      info.innerHTML = `<div class="t">${escapeHtml(g.title)}</div><div class="g">${escapeHtml((g.genre || [])[0] || "")}</div>`;
+      item.appendChild(info);
+      shelf.appendChild(item);
+    });
+
+    // Featured games: highest rated
+    const featured = [...games].sort((a, b) => (b.rating || 0) - (a.rating || 0)).slice(0, 4);
+    renderGameGrid(document.getElementById("featuredGrid"), featured);
+
+    // Latest games: most recent release date
+    const latest = [...games].sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)).slice(0, 4);
+    renderGameGrid(document.getElementById("latestGrid"), latest);
+
+    // Genre chips -> link to games page filtered
+    const chipContainer = document.getElementById("genreChips");
+    GEEPLAYS_GENRES.forEach(genre => {
+      const a = document.createElement("a");
+      a.className = "chip";
+      a.href = `./games.html?genre=${encodeURIComponent(genre)}`;
+      a.textContent = genre;
+      chipContainer.appendChild(a);
+    });
+  })();
+</script>
+</body>
+</html>

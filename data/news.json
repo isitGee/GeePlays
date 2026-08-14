@@ -1,0 +1,56 @@
+[
+  {
+    "id": "news-001",
+    "title": "5 Cozy Games to Decompress With This Weekend",
+    "description": "Farming sims, low-stakes exploration, and a couple of surprises for when you need something gentler than your usual rotation.",
+    "image": "assets/images/news/cozy-picks.jpg",
+    "date": "2026-08-10",
+    "category": "Roundup",
+    "url": "games.html?genre=Simulation"
+  },
+  {
+    "id": "news-002",
+    "title": "Why Roguelikes Keep Getting Better",
+    "description": "From run variety to narrative that actually remembers your deaths, a look at what makes the current wave of roguelikes so replayable.",
+    "image": "assets/images/news/roguelike-feature.jpg",
+    "date": "2026-08-06",
+    "category": "Feature",
+    "url": "game.html?id=hades"
+  },
+  {
+    "id": "news-003",
+    "title": "Open-World Racers Are Having a Moment",
+    "description": "Living maps, dynamic weather, and season passes that actually change how a track drives — racing games have quietly leveled up.",
+    "image": "assets/images/news/racing-feature.jpg",
+    "date": "2026-07-29",
+    "category": "Feature",
+    "url": "game.html?id=forza-horizon-5"
+  },
+  {
+    "id": "news-004",
+    "title": "Best Co-op Games to Play With a Partner",
+    "description": "Split-screen adventures, shared-brain puzzles, and a couple of picks built entirely around two people being in the same room.",
+    "image": "assets/images/news/coop-picks.jpg",
+    "date": "2026-07-22",
+    "category": "Roundup",
+    "url": "game.html?id=it-takes-two"
+  },
+  {
+    "id": "news-005",
+    "title": "A Beginner's Guide to Ghost Hunting Games",
+    "description": "New to investigation horror? Here's what to bring, what to expect, and why playing with headphones is non-negotiable.",
+    "image": "assets/images/news/horror-guide.jpg",
+    "date": "2026-07-15",
+    "category": "Guide",
+    "url": "game.html?id=phasmophobia"
+  },
+  {
+    "id": "news-006",
+    "title": "GeePlays Picks: Strategy Games for Long Weekends",
+    "description": "Turn-based empires, tech trees, and the particular joy of saying 'one more turn' at 2am.",
+    "image": "assets/images/news/strategy-picks.jpg",
+    "date": "2026-07-08",
+    "category": "Roundup",
+    "url": "game.html?id=civilization-vi"
+  }
+]

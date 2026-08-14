@@ -1,0 +1,518 @@
+[
+  {
+    "id": "stardew-valley",
+    "title": "Stardew Valley",
+    "slug": "stardew-valley",
+    "cover": "assets/images/games/stardew-valley.jpg",
+    "banner": "assets/images/banners/stardew-valley.jpg",
+    "shortDescription": "Inherit a run-down farm and build a new life in Pelican Town.",
+    "description": "A cozy life sim where you trade the daily grind for a plot of overgrown land, a handful of tools, and total freedom. Plant crops, raise animals, fish the coast, dig through the mines, and get to know the townsfolk one season at a time. Play solo at your own pace or bring friends along for co-op farming.",
+    "genre": ["Simulation", "RPG", "Indie"],
+    "developer": "ConcernedApe",
+    "publisher": "ConcernedApe",
+    "releaseDate": "2016-02-26",
+    "platforms": ["Windows", "macOS", "Linux", "PlayStation", "Xbox", "Nintendo Switch"],
+    "rating": 9.6,
+    "requirements": {
+      "minimum": {
+        "os": "Windows 7/8/10 (64-bit)",
+        "processor": "2 Ghz",
+        "memory": "2 GB RAM",
+        "graphics": "256 MB video memory, shader model 3.0+",
+        "storage": "500 MB available space"
+      },
+      "recommended": {
+        "os": "Windows 10 (64-bit)",
+        "processor": "2.8 Ghz dual-core",
+        "memory": "4 GB RAM",
+        "graphics": "1 GB video memory, shader model 4.0+",
+        "storage": "1 GB available space"
+      }
+    },
+    "screenshots": [
+      "assets/images/screenshots/stardew-valley-1.jpg",
+      "assets/images/screenshots/stardew-valley-2.jpg",
+      "assets/images/screenshots/stardew-valley-3.jpg",
+      "assets/images/screenshots/stardew-valley-4.jpg"
+    ],
+    "youtube": "https://www.youtube.com/watch?v=ot7uXNQskhs",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/413150/Stardew_Valley/"
+    },
+    "tags": ["Farming", "Life Sim", "Pixel Art", "Relaxing", "Multiplayer", "Co-op"]
+  },
+  {
+    "id": "hades",
+    "title": "Hades",
+    "slug": "hades",
+    "cover": "assets/images/games/hades.jpg",
+    "banner": "assets/images/banners/hades.jpg",
+    "shortDescription": "Battle out of the underworld in a god-like rogue-like dungeon crawler.",
+    "description": "As Zagreus, son of Hades, fight your way out of the Underworld using the powers and blessings of the Olympians. Every escape attempt reshapes the layout, the enemies, and your build, while a cast of Greek gods and monsters keeps the story moving between runs. Fast, stylish combat meets a narrative that actually remembers what you've done.",
+    "genre": ["Action", "Roguelike", "Indie"],
+    "developer": "Supergiant Games",
+    "publisher": "Supergiant Games",
+    "releaseDate": "2020-09-17",
+    "platforms": ["Windows", "macOS", "PlayStation", "Xbox", "Nintendo Switch"],
+    "rating": 9.3,
+    "requirements": {
+      "minimum": {
+        "os": "Windows 7 or later (64-bit)",
+        "processor": "Intel Core i3-3225 or equivalent",
+        "memory": "4 GB RAM",
+        "graphics": "Intel HD 4600 or equivalent",
+        "storage": "10 GB available space"
+      },
+      "recommended": {
+        "os": "Windows 10 (64-bit)",
+        "processor": "Intel Core i5-4460 or equivalent",
+        "memory": "8 GB RAM",
+        "graphics": "Nvidia GTX 760 or equivalent",
+        "storage": "10 GB available space"
+      }
+    },
+    "screenshots": [
+      "assets/images/screenshots/hades-1.jpg",
+      "assets/images/screenshots/hades-2.jpg",
+      "assets/images/screenshots/hades-3.jpg",
+      "assets/images/screenshots/hades-4.jpg"
+    ],
+    "youtube": "https://www.youtube.com/watch?v=Bz8l935Bv0Y",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/1145360/Hades/"
+    },
+    "tags": ["Roguelike", "Mythology", "Fast-Paced", "Story Rich", "Singleplayer"]
+  },
+  {
+    "id": "portal-2",
+    "title": "Portal 2",
+    "slug": "portal-2",
+    "cover": "assets/images/games/portal-2.jpg",
+    "banner": "assets/images/banners/portal-2.jpg",
+    "shortDescription": "Bend space with the Aperture Science Handheld Portal Device.",
+    "description": "The sequel to one of gaming's sharpest puzzle experiments expands the formula with new mechanics, a much longer campaign, and a genuinely funny script courtesy of GLaDOS and friends. Solo players untangle Aperture Science's test chambers one portal at a time, while the separate co-op campaign is built entirely around two players thinking together.",
+    "genre": ["Puzzle", "Action", "Adventure"],
+    "developer": "Valve",
+    "publisher": "Valve",
+    "releaseDate": "2011-04-19",
+    "platforms": ["Windows", "macOS", "Linux", "PlayStation 3", "Xbox 360"],
+    "rating": 9.5,
+    "requirements": {
+      "minimum": {
+        "os": "Windows 7",
+        "processor": "3.0 GHz P4, Dual Core 2.0 GHz",
+        "memory": "2 GB RAM",
+        "graphics": "DirectX 9 compatible, ATI/Nvidia with 128 MB",
+        "storage": "8 GB available space"
+      },
+      "recommended": {
+        "os": "Windows 10 (64-bit)",
+        "processor": "Dual Core 2.4 GHz",
+        "memory": "4 GB RAM",
+        "graphics": "DirectX 9 compatible, 512 MB video memory",
+        "storage": "8 GB available space"
+      }
+    },
+    "screenshots": [
+      "assets/images/screenshots/portal-2-1.jpg",
+      "assets/images/screenshots/portal-2-2.jpg",
+      "assets/images/screenshots/portal-2-3.jpg",
+      "assets/images/screenshots/portal-2-4.jpg"
+    ],
+    "youtube": "https://www.youtube.com/watch?v=8_Ki0Gfczfo",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/620/Portal_2/"
+    },
+    "tags": ["Puzzle", "Sci-fi", "Co-op", "Singleplayer", "Story Rich"]
+  },
+  {
+    "id": "hollow-knight",
+    "title": "Hollow Knight",
+    "slug": "hollow-knight",
+    "cover": "assets/images/games/hollow-knight.jpg",
+    "banner": "assets/images/banners/hollow-knight.jpg",
+    "shortDescription": "Explore a vast, hand-drawn kingdom of insects and heroes.",
+    "description": "Descend into Hallownest, a sprawling, decaying kingdom beneath the surface, packed with secret passages, ancient enemies, and hard-won upgrades. Hollow Knight rewards careful exploration and sharp reflexes in equal measure, with a moody hand-drawn art style and a score that quietly sells every corner of its world.",
+    "genre": ["Action", "Adventure", "Indie"],
+    "developer": "Team Cherry",
+    "publisher": "Team Cherry",
+    "releaseDate": "2017-02-24",
+    "platforms": ["Windows", "macOS", "Linux", "PlayStation", "Xbox", "Nintendo Switch"],
+    "rating": 9.4,
+    "requirements": {
+      "minimum": {
+        "os": "Windows 7 (64-bit)",
+        "processor": "Intel Core 2 Duo E5200",
+        "memory": "4 GB RAM",
+        "graphics": "GeForce 9800GTX+ (1GB)",
+        "storage": "9 GB available space"
+      },
+      "recommended": {
+        "os": "Windows 10 (64-bit)",
+        "processor": "Intel Core i5",
+        "memory": "8 GB RAM",
+        "graphics": "GeForce GTX 660 or better",
+        "storage": "9 GB available space"
+      }
+    },
+    "screenshots": [
+      "assets/images/screenshots/hollow-knight-1.jpg",
+      "assets/images/screenshots/hollow-knight-2.jpg",
+      "assets/images/screenshots/hollow-knight-3.jpg",
+      "assets/images/screenshots/hollow-knight-4.jpg"
+    ],
+    "youtube": "https://www.youtube.com/watch?v=UAO2urG23S4",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/367520/Hollow_Knight/"
+    },
+    "tags": ["Metroidvania", "Souls-like", "Hand-drawn", "Atmospheric", "Singleplayer"]
+  },
+  {
+    "id": "elden-ring",
+    "title": "Elden Ring",
+    "slug": "elden-ring",
+    "cover": "assets/images/games/elden-ring.jpg",
+    "banner": "assets/images/banners/elden-ring.jpg",
+    "shortDescription": "Rise, Tarnished, and carve your own path across the Lands Between.",
+    "description": "FromSoftware's open-world take on its trademark punishing action-RPG formula, built around a world designed with George R. R. Martin. Ride, dodge, and cast your way across the Lands Between, chasing shards of the shattered Elden Ring while every boss, dungeon, and legacy area asks you to earn your progress the hard way.",
+    "genre": ["Action RPG", "Open World"],
+    "developer": "FromSoftware",
+    "publisher": "Bandai Namco Entertainment",
+    "releaseDate": "2022-02-25",
+    "platforms": ["Windows", "PlayStation", "Xbox"],
+    "rating": 9.5,
+    "requirements": {
+      "minimum": {
+        "os": "Windows 10",
+        "processor": "Intel Core i5-8400 / AMD Ryzen 3 3300X",
+        "memory": "12 GB RAM",
+        "graphics": "GeForce GTX 1060 3GB / Radeon RX 580 4GB",
+        "storage": "60 GB available space"
+      },
+      "recommended": {
+        "os": "Windows 10/11",
+        "processor": "Intel Core i7-8700K / AMD Ryzen 5 3600X",
+        "memory": "16 GB RAM",
+        "graphics": "GeForce GTX 1070 8GB / Radeon RX Vega 56 8GB",
+        "storage": "60 GB SSD space"
+      }
+    },
+    "screenshots": [
+      "assets/images/screenshots/elden-ring-1.jpg",
+      "assets/images/screenshots/elden-ring-2.jpg",
+      "assets/images/screenshots/elden-ring-3.jpg",
+      "assets/images/screenshots/elden-ring-4.jpg"
+    ],
+    "youtube": "https://www.youtube.com/watch?v=AKXiKBnzpBQ",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/1245620/ELDEN_RING/"
+    },
+    "tags": ["Souls-like", "Open World", "Dark Fantasy", "Difficult", "Singleplayer"]
+  },
+  {
+    "id": "stray",
+    "title": "Stray",
+    "slug": "stray",
+    "cover": "assets/images/games/stray.jpg",
+    "banner": "assets/images/banners/stray.jpg",
+    "shortDescription": "Roam a neon-lit robot city as a lost cat trying to find its way home.",
+    "description": "Separated from its family, a stray cat falls into a walled-off cybercity populated entirely by droids. With a small drone companion in tow, you'll leap across rooftops, dodge dangerous creatures, and slowly piece together why the city's residents never see the sky. It's a short, atmospheric adventure told almost entirely through a cat's-eye view.",
+    "genre": ["Adventure", "Puzzle"],
+    "developer": "BlueTwelve Studio",
+    "publisher": "Annapurna Interactive",
+    "releaseDate": "2022-07-19",
+    "platforms": ["Windows", "macOS", "PlayStation", "Xbox", "Nintendo Switch"],
+    "rating": 8.7,
+    "requirements": {
+      "minimum": {
+        "os": "Windows 10 (64-bit)",
+        "processor": "Intel Core i5-6600K / AMD Ryzen 5 2600",
+        "memory": "8 GB RAM",
+        "graphics": "GeForce GTX 780 / Radeon RX 470",
+        "storage": "10 GB available space"
+      },
+      "recommended": {
+        "os": "Windows 10/11 (64-bit)",
+        "processor": "Intel Core i7-7700K / AMD Ryzen 5 3600",
+        "memory": "16 GB RAM",
+        "graphics": "GeForce GTX 1060 6GB / Radeon RX 580",
+        "storage": "10 GB SSD space"
+      }
+    },
+    "screenshots": [
+      "assets/images/screenshots/stray-1.jpg",
+      "assets/images/screenshots/stray-2.jpg",
+      "assets/images/screenshots/stray-3.jpg",
+      "assets/images/screenshots/stray-4.jpg"
+    ],
+    "youtube": "https://www.youtube.com/watch?v=4uP2MyUL49s",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/1332010/Stray/"
+    },
+    "tags": ["Cats", "Cyberpunk", "Atmospheric", "Singleplayer", "Exploration"]
+  },
+  {
+    "id": "it-takes-two",
+    "title": "It Takes Two",
+    "slug": "it-takes-two",
+    "cover": "assets/images/games/it-takes-two.jpg",
+    "banner": "assets/images/banners/it-takes-two.jpg",
+    "shortDescription": "A split-screen co-op adventure built for exactly two players.",
+    "description": "Cody and May are on the verge of divorce when they're magically turned into dolls and forced to work together to turn themselves back. It Takes Two reinvents its core gameplay in nearly every chapter, hopping between platforming, physics puzzles, and mini-games that only work because two people are playing at once.",
+    "genre": ["Adventure", "Action", "Co-op"],
+    "developer": "Hazelight Studios",
+    "publisher": "Electronic Arts",
+    "releaseDate": "2021-03-26",
+    "platforms": ["Windows", "PlayStation", "Xbox", "Nintendo Switch"],
+    "rating": 9.2,
+    "requirements": {
+      "minimum": {
+        "os": "Windows 10 (64-bit)",
+        "processor": "Intel Core i3-2100 / AMD FX-6300",
+        "memory": "8 GB RAM",
+        "graphics": "Nvidia GTX 660 2GB / AMD Radeon HD 7850 2GB",
+        "storage": "50 GB available space"
+      },
+      "recommended": {
+        "os": "Windows 10 (64-bit)",
+        "processor": "Intel Core i5-4460 / AMD Ryzen 3 1300X",
+        "memory": "8 GB RAM",
+        "graphics": "Nvidia GTX 1060 3GB / AMD Radeon RX 480",
+        "storage": "50 GB available space"
+      }
+    },
+    "screenshots": [
+      "assets/images/screenshots/it-takes-two-1.jpg",
+      "assets/images/screenshots/it-takes-two-2.jpg",
+      "assets/images/screenshots/it-takes-two-3.jpg",
+      "assets/images/screenshots/it-takes-two-4.jpg"
+    ],
+    "youtube": "https://www.youtube.com/watch?v=jc-tYY3BSBQ",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/1426210/It_Takes_Two/"
+    },
+    "tags": ["Co-op", "Split Screen", "Puzzle", "Story Rich", "Multiplayer"]
+  },
+  {
+    "id": "cyberpunk-2077",
+    "title": "Cyberpunk 2077",
+    "slug": "cyberpunk-2077",
+    "cover": "assets/images/games/cyberpunk-2077.jpg",
+    "banner": "assets/images/banners/cyberpunk-2077.jpg",
+    "shortDescription": "Become a mercenary outlaw in the sprawl of Night City.",
+    "description": "An open-world action-RPG set in Night City, a megalopolis obsessed with power, glamour, and body modification. Play as V, a mercenary chasing a one-of-a-kind implant that holds the key to immortality, while every choice in dialogue, builds, and jobs shapes how the story plays out.",
+    "genre": ["Action RPG", "Open World"],
+    "developer": "CD Projekt Red",
+    "publisher": "CD Projekt",
+    "releaseDate": "2020-12-10",
+    "platforms": ["Windows", "PlayStation", "Xbox"],
+    "rating": 8.6,
+    "requirements": {
+      "minimum": {
+        "os": "Windows 10 (64-bit)",
+        "processor": "Intel Core i7-6700 / AMD Ryzen 5 1600",
+        "memory": "12 GB RAM",
+        "graphics": "Nvidia GTX 1060 6GB / AMD RX 580 8GB",
+        "storage": "70 GB SSD space"
+      },
+      "recommended": {
+        "os": "Windows 10/11 (64-bit)",
+        "processor": "Intel Core i7-12700 / AMD Ryzen 7 7800X3D",
+        "memory": "16 GB RAM",
+        "graphics": "Nvidia RTX 2060 Super / AMD RX 5700 XT",
+        "storage": "70 GB SSD space"
+      }
+    },
+    "screenshots": [
+      "assets/images/screenshots/cyberpunk-2077-1.jpg",
+      "assets/images/screenshots/cyberpunk-2077-2.jpg",
+      "assets/images/screenshots/cyberpunk-2077-3.jpg",
+      "assets/images/screenshots/cyberpunk-2077-4.jpg"
+    ],
+    "youtube": "https://www.youtube.com/watch?v=UnA7tepsc7s",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/1091500/Cyberpunk_2077/"
+    },
+    "tags": ["Open World", "Cyberpunk", "Story Rich", "RPG", "Futuristic"]
+  },
+  {
+    "id": "rocket-league",
+    "title": "Rocket League",
+    "slug": "rocket-league",
+    "cover": "assets/images/games/rocket-league.jpg",
+    "banner": "assets/images/banners/rocket-league.jpg",
+    "shortDescription": "Vehicular soccer at high speed, free to play.",
+    "description": "Rocket-powered cars, a giant ball, and a stadium built for chaos. Rocket League mixes the basics of soccer with aerial car control, boost management, and a whole lot of trick shots, across quick casual matches or ranked competitive play. Free to play, with cross-platform matches against everyone else online.",
+    "genre": ["Sports", "Racing"],
+    "developer": "Psyonix",
+    "publisher": "Psyonix",
+    "releaseDate": "2015-07-07",
+    "platforms": ["Windows", "PlayStation", "Xbox", "Nintendo Switch"],
+    "rating": 8.8,
+    "requirements": {
+      "minimum": {
+        "os": "Windows 7 (64-bit) or newer",
+        "processor": "2.5 GHz Dual core",
+        "memory": "4 GB RAM",
+        "graphics": "Nvidia GeForce 760 / AMD Radeon R7 260x",
+        "storage": "20 GB available space"
+      },
+      "recommended": {
+        "os": "Windows 10 (64-bit)",
+        "processor": "3.0 GHz Quad core",
+        "memory": "8 GB RAM",
+        "graphics": "Nvidia GeForce GTX 970 / AMD Radeon R9 290",
+        "storage": "20 GB available space"
+      }
+    },
+    "screenshots": [
+      "assets/images/screenshots/rocket-league-1.jpg",
+      "assets/images/screenshots/rocket-league-2.jpg",
+      "assets/images/screenshots/rocket-league-3.jpg",
+      "assets/images/screenshots/rocket-league-4.jpg"
+    ],
+    "youtube": "https://www.youtube.com/watch?v=_sL-2QCbfaw",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.epicgames.com/en-US/p/rocket-league"
+    },
+    "tags": ["Sports", "Multiplayer", "Competitive", "Free to Play", "Cars"]
+  },
+  {
+    "id": "phasmophobia",
+    "title": "Phasmophobia",
+    "slug": "phasmophobia",
+    "cover": "assets/images/games/phasmophobia.jpg",
+    "banner": "assets/images/banners/phasmophobia.jpg",
+    "shortDescription": "Grab your gear and hunt ghosts with up to three friends.",
+    "description": "A 4-player online co-op horror game where paranormal investigators walk into haunted locations with EMF readers, spirit boxes, and thermometers, trying to identify the ghost before it identifies you. Every contract is different, every ghost behaves differently, and every jump scare is worse with friends on voice chat.",
+    "genre": ["Horror", "Multiplayer"],
+    "developer": "Kinetic Games",
+    "publisher": "Kinetic Games",
+    "releaseDate": "2020-09-18",
+    "platforms": ["Windows", "PlayStation", "Xbox"],
+    "rating": 8.4,
+    "requirements": {
+      "minimum": {
+        "os": "Windows 10 (64-bit)",
+        "processor": "Intel Core i5-4590",
+        "memory": "8 GB RAM",
+        "graphics": "Nvidia GTX 970 / AMD R9 290",
+        "storage": "20 GB available space"
+      },
+      "recommended": {
+        "os": "Windows 10/11 (64-bit)",
+        "processor": "Intel Core i7-8700",
+        "memory": "16 GB RAM",
+        "graphics": "Nvidia GTX 1660 or better",
+        "storage": "20 GB available space"
+      }
+    },
+    "screenshots": [
+      "assets/images/screenshots/phasmophobia-1.jpg",
+      "assets/images/screenshots/phasmophobia-2.jpg",
+      "assets/images/screenshots/phasmophobia-3.jpg",
+      "assets/images/screenshots/phasmophobia-4.jpg"
+    ],
+    "youtube": "https://www.youtube.com/watch?v=sRa9oeo5KiY",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/739630/Phasmophobia/"
+    },
+    "tags": ["Horror", "Co-op", "Multiplayer", "Psychological", "VR Supported"]
+  },
+  {
+    "id": "forza-horizon-5",
+    "title": "Forza Horizon 5",
+    "slug": "forza-horizon-5",
+    "cover": "assets/images/games/forza-horizon-5.jpg",
+    "banner": "assets/images/banners/forza-horizon-5.jpg",
+    "shortDescription": "Race across the living, breathing landscapes of Mexico.",
+    "description": "An open-world racer set across deserts, jungles, canyons, and a snow-capped volcano, with weather and seasons that change the way every road drives. Collect and customize hundreds of cars, chase down Horizon Story missions, or just go exploring off the beaten path with friends online.",
+    "genre": ["Racing", "Sports"],
+    "developer": "Playground Games",
+    "publisher": "Xbox Game Studios",
+    "releaseDate": "2021-11-09",
+    "platforms": ["Windows", "Xbox", "PlayStation"],
+    "rating": 9.0,
+    "requirements": {
+      "minimum": {
+        "os": "Windows 10 version 15063.0 (64-bit)",
+        "processor": "Intel i5-4460 / AMD Ryzen 3 1200",
+        "memory": "8 GB RAM",
+        "graphics": "Nvidia GTX 970 / AMD RX 470",
+        "storage": "110 GB available space"
+      },
+      "recommended": {
+        "os": "Windows 10/11 (64-bit)",
+        "processor": "Intel i5-8400 / AMD Ryzen 5 1500X",
+        "memory": "16 GB RAM",
+        "graphics": "Nvidia GTX 1070 / AMD RX 590",
+        "storage": "110 GB SSD space"
+      }
+    },
+    "screenshots": [
+      "assets/images/screenshots/forza-horizon-5-1.jpg",
+      "assets/images/screenshots/forza-horizon-5-2.jpg",
+      "assets/images/screenshots/forza-horizon-5-3.jpg",
+      "assets/images/screenshots/forza-horizon-5-4.jpg"
+    ],
+    "youtube": "https://www.youtube.com/watch?v=Rv7xLt5yNsM",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/1551360/Forza_Horizon_5/"
+    },
+    "tags": ["Open World", "Racing", "Multiplayer", "Cars", "Exploration"]
+  },
+  {
+    "id": "civilization-vi",
+    "title": "Sid Meier's Civilization VI",
+    "slug": "civilization-vi",
+    "cover": "assets/images/games/civilization-vi.jpg",
+    "banner": "assets/images/banners/civilization-vi.jpg",
+    "shortDescription": "Build an empire that stands the test of time.",
+    "description": "A turn-based strategy game where you guide a civilization from a single tribal settlement to a global superpower. Manage districts, research, culture, and diplomacy across thousands of years of history, and win through military conquest, science, culture, religion, or diplomacy — whichever path fits your empire best.",
+    "genre": ["Strategy"],
+    "developer": "Firaxis Games",
+    "publisher": "2K",
+    "releaseDate": "2016-10-21",
+    "platforms": ["Windows", "macOS", "Linux", "PlayStation", "Xbox", "Nintendo Switch"],
+    "rating": 9.1,
+    "requirements": {
+      "minimum": {
+        "os": "Windows 7/8.1/10 (64-bit)",
+        "processor": "Intel Core i3 2.5 GHz / AMD Phenom II 2.6 GHz",
+        "memory": "4 GB RAM",
+        "graphics": "1 GB video memory, Nvidia GeForce 650 / AMD Radeon HD 7000",
+        "storage": "12 GB available space"
+      },
+      "recommended": {
+        "os": "Windows 10 (64-bit)",
+        "processor": "Intel Core i5 2.5 GHz or better",
+        "memory": "8 GB RAM",
+        "graphics": "2 GB video memory, Nvidia GeForce 770 or better",
+        "storage": "12 GB available space"
+      }
+    },
+    "screenshots": [
+      "assets/images/screenshots/civilization-vi-1.jpg",
+      "assets/images/screenshots/civilization-vi-2.jpg",
+      "assets/images/screenshots/civilization-vi-3.jpg",
+      "assets/images/screenshots/civilization-vi-4.jpg"
+    ],
+    "youtube": "https://www.youtube.com/watch?v=qvBf6WBatk0",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/289070/Sid_Meiers_Civilization_VI/"
+    },
+    "tags": ["Strategy", "Turn-Based", "Historical", "Multiplayer", "4X"]
+  }
+]

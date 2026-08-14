@@ -1,0 +1,29 @@
+{
+  "supportTitle": "Support Gee",
+  "intro": "If you enjoy GeePlays and want to support its upkeep, you can send a small donation via mobile money or bank transfer. All values below are replaceable via this JSON file.",
+  "mobileMoney": [
+    {
+      "provider": "M-Pesa",
+      "country": "Tanzania",
+      "number": "+255712345678",
+      "instructions": "Send to merchant/personal number"
+    },
+    {
+      "provider": "Airtel Money",
+      "country": "Tanzania",
+      "number": "+255718765432",
+      "instructions": "Send to personal wallet"
+    }
+  ],
+  "bank": {
+    "bankName": "NMB Bank",
+    "accountName": "GeePlays",
+    "accountNumber": "1234567890",
+    "branch": "Dar es Salaam"
+  },
+  "contacts": [
+    { "label": "Email", "value": "hello@geeplays.example" },
+    { "label": "Phone", "value": "+255712345678" },
+    { "label": "Twitter", "value": "@GeePlays" }
+  ]
+}
