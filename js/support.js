@@ -29,7 +29,49 @@ function makeCopyBtn(text) {
   return btn;
 }
 
-function makePaymentCard({ title, country, number, instructions, logoClass }) {
+function getBrandLogoByProvider(provider) {
+  const normalized = (provider || "").toLowerCase();
+
+  if (normalized.includes("vodacom")) {
+    return {
+      logoClass: "vodacom",
+      logoSrc: "./assets/vodacom_logo.jpg",
+      logoAlt: "Vodacom logo",
+    };
+  }
+
+  if (normalized.includes("airtel")) {
+    return {
+      logoClass: "airtel",
+      logoSrc: "./assets/airtel_logo.jpg",
+      logoAlt: "Airtel logo",
+    };
+  }
+
+  if (normalized.includes("nmb") || normalized.includes("bank")) {
+    return {
+      logoClass: "nmb",
+      logoSrc: "./assets/nmb_logo.jpg",
+      logoAlt: "NMB logo",
+    };
+  }
+
+  return {
+    logoClass: "mpesa",
+    logoSrc: "./assets/vodacom_logo.jpg",
+    logoAlt: "Vodacom logo",
+  };
+}
+
+function makePaymentCard({
+  title,
+  country,
+  number,
+  instructions,
+  logoClass,
+  logoSrc,
+  logoAlt,
+}) {
   const card = document.createElement("article");
   card.className = "support-card";
 
@@ -38,7 +80,12 @@ function makePaymentCard({ title, country, number, instructions, logoClass }) {
 
   const logo = document.createElement("div");
   logo.className = `brand-logo ${logoClass}`;
-  logo.textContent = logoClass === "mpesa" ? "M-P" : logoClass === "airtel" ? "A" : "NMB";
+
+  const logoImg = document.createElement("img");
+  logoImg.src = logoSrc;
+  logoImg.alt = logoAlt || title;
+  logoImg.loading = "lazy";
+  logo.appendChild(logoImg);
 
   const tag = document.createElement("span");
   tag.className = "support-tag";
@@ -86,12 +133,15 @@ function populateSupport(data) {
     mobileList.replaceChildren();
     mobileList.className = "support-grid";
     data.mobileMoney.forEach((m) => {
+      const brand = getBrandLogoByProvider(m.provider);
       const card = makePaymentCard({
         title: m.provider,
         country: m.country,
         number: m.number,
         instructions: m.instructions,
-        logoClass: (m.provider || "").toLowerCase().includes("airtel") ? "airtel" : "mpesa"
+        logoClass: brand.logoClass,
+        logoSrc: brand.logoSrc,
+        logoAlt: brand.logoAlt,
       });
       mobileList.appendChild(card);
     });
@@ -101,12 +151,15 @@ function populateSupport(data) {
     bankEl.replaceChildren();
     bankEl.className = "support-grid";
     const b = data.bank;
+    const brand = getBrandLogoByProvider(b.bankName);
     const card = makePaymentCard({
       title: b.bankName,
       country: b.branch || "Tanzania",
       number: b.accountNumber,
-      instructions: `${b.accountName} • Account number`,
-      logoClass: "nmb"
+      instructions: b.instructions,
+      logoClass: brand.logoClass,
+      logoSrc: brand.logoSrc,
+      logoAlt: brand.logoAlt,
     });
     bankEl.appendChild(card);
   }

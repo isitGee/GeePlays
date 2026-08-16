@@ -817,26 +817,32 @@ h4 {
 .brand-logo {
   width: 54px;
   height: 54px;
-  border-radius: 14px;
+  border-radius: 50%;
   display: grid;
   place-items: center;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.brand-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: fit;
+  display: block;
+  background: transparent;
 }
 .brand-logo.mpesa {
   background: linear-gradient(135deg, #52d894, #1a8f66);
-  color: #052611;
+}
+.brand-logo.vodacom {
+  background: linear-gradient(135deg, #e53935, #d71f2a);
 }
 .brand-logo.airtel {
-  background: linear-gradient(135deg, #ff4d5a, #a7101d);
-  color: #fff;
+  background: linear-gradient(135deg, #f44336, #d11d1d);
 }
 .brand-logo.nmb {
-  background: linear-gradient(135deg, #5ab6ff, #1747c6);
-  color: #f8fbff;
+  background: linear-gradient(135deg, #1e5dff, #123ec4);
 }
 .support-tag {
   font-family: var(--font-mono);

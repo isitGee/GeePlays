@@ -1,29 +1,29 @@
 {
   "supportTitle": "Support Gee",
-  "intro": "If you enjoy GeePlays and want to support its upkeep, you can send a small donation via mobile money or bank transfer. All values below are replaceable via this JSON file.",
+  "intro": "If you enjoy GeePlays and want to support its upkeep, you can send a small donation via mobile money or bank transfer.",
   "mobileMoney": [
     {
-      "provider": "MPESA Tanzania",
+      "provider": "Vodacom Tanzania",
       "country": "Tanzania",
-      "number": "+255712345678",
-      "instructions": "Send to the merchant or personal number and include your name in the reference."
+      "number": "+255762358050",
+      "instructions": "Send to the Vodacom number and include your name in the reference."
     },
     {
       "provider": "Airtel Money Tanzania",
       "country": "Tanzania",
-      "number": "+255718765432",
+      "number": "+255680317590",
       "instructions": "Send to the Airtel Money wallet and confirm the payment reference."
     }
   ],
   "bank": {
     "bankName": "NMB Bank",
-    "accountName": "GeePlays",
-    "accountNumber": "1234567890",
-    "branch": "Dar es Salaam"
+    "accountName": "George Mwanga",
+    "accountNumber": "635100333686",
+    "instructions": "Transfer to the NMB Bank account and include your name in the reference."
   },
   "contacts": [
-    { "label": "Email", "value": "hello@geeplays.example" },
-    { "label": "Phone", "value": "+255712345678" },
-    { "label": "Twitter", "value": "@GeePlays" }
+    { "label": "Email", "value": "georgemwanga116@gmail.com" },
+    { "label": "Phone", "value": "+255762358050" },
+    { "label": "WhatsApp", "value": "+255762358050" }
   ]
 }
