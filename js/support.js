@@ -29,6 +29,48 @@ function makeCopyBtn(text) {
   return btn;
 }
 
+function makePaymentCard({ title, country, number, instructions, logoClass }) {
+  const card = document.createElement("article");
+  card.className = "support-card";
+
+  const header = document.createElement("div");
+  header.className = "support-card-header";
+
+  const logo = document.createElement("div");
+  logo.className = `brand-logo ${logoClass}`;
+  logo.textContent = logoClass === "mpesa" ? "M-P" : logoClass === "airtel" ? "A" : "NMB";
+
+  const tag = document.createElement("span");
+  tag.className = "support-tag";
+  tag.textContent = country;
+
+  header.appendChild(logo);
+  header.appendChild(tag);
+
+  const heading = document.createElement("h3");
+  heading.textContent = title;
+
+  const numberEl = document.createElement("div");
+  numberEl.className = "support-number";
+  numberEl.textContent = number;
+
+  const note = document.createElement("p");
+  note.className = "muted";
+  note.textContent = instructions;
+
+  const actions = document.createElement("div");
+  actions.className = "support-actions";
+  actions.appendChild(makeCopyBtn(number));
+
+  card.appendChild(header);
+  card.appendChild(heading);
+  card.appendChild(numberEl);
+  card.appendChild(note);
+  card.appendChild(actions);
+
+  return card;
+}
+
 function populateSupport(data) {
   if (!data) return;
   const titleEl = document.getElementById("supportTitle");
@@ -42,36 +84,31 @@ function populateSupport(data) {
 
   if (mobileList && Array.isArray(data.mobileMoney)) {
     mobileList.replaceChildren();
+    mobileList.className = "support-grid";
     data.mobileMoney.forEach((m) => {
-      const row = document.createElement("div");
-      row.className = "support-item";
-      const left = document.createElement("div");
-      left.innerHTML = `<strong>${escapeHtml(m.provider)}</strong> <span class="muted">(${escapeHtml(m.country)})</span><div class="muted">${escapeHtml(m.instructions)}</div>`;
-      const right = document.createElement("div");
-      right.className = "support-actions";
-      const num = document.createElement("div");
-      num.className = "support-number";
-      num.textContent = m.number;
-      right.appendChild(num);
-      right.appendChild(makeCopyBtn(m.number));
-      row.appendChild(left);
-      row.appendChild(right);
-      mobileList.appendChild(row);
+      const card = makePaymentCard({
+        title: m.provider,
+        country: m.country,
+        number: m.number,
+        instructions: m.instructions,
+        logoClass: (m.provider || "").toLowerCase().includes("airtel") ? "airtel" : "mpesa"
+      });
+      mobileList.appendChild(card);
     });
   }
 
   if (bankEl && data.bank) {
     bankEl.replaceChildren();
+    bankEl.className = "support-grid";
     const b = data.bank;
-    const container = document.createElement("div");
-    container.className = "support-bank";
-    container.innerHTML = `<div><strong>${escapeHtml(b.bankName)}</strong> — ${escapeHtml(b.branch || "")}</div>`;
-    const info = document.createElement("div");
-    info.className = "muted";
-    info.innerHTML = `${escapeHtml(b.accountName)} &middot; <span class=\"bank-number\">${escapeHtml(b.accountNumber)}</span>`;
-    container.appendChild(info);
-    container.appendChild(makeCopyBtn(b.accountNumber));
-    bankEl.appendChild(container);
+    const card = makePaymentCard({
+      title: b.bankName,
+      country: b.branch || "Tanzania",
+      number: b.accountNumber,
+      instructions: `${b.accountName} • Account number`,
+      logoClass: "nmb"
+    });
+    bankEl.appendChild(card);
   }
 
   if (footerContacts && Array.isArray(data.contacts)) {

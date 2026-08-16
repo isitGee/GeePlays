@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GeePlays — Discover. Explore. Play.</title>
+<title>GeePlays: TZ gamer for gamers everywhere</title>
 <meta name="description" content="GeePlays is a gaming discovery hub — browse games, check requirements, view screenshots, watch gameplay, and find where to get them.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -65,15 +65,12 @@
     <div class="container hero-grid">
       <div>
         <span class="eyebrow">Discover. Explore. Play.</span>
-        <h1 class="hero-title">Find your next<br><span class="grad">obsession.</span></h1>
+        <h1 class="hero-title">Find your next <span class="grad">obsession.</span></h1>
         <p class="hero-copy">Browse games, check system requirements, flip through screenshots, and watch real gameplay — then head straight to the official store to get it.</p>
         <div class="hero-actions">
           <a href="./games.html" class="btn btn-primary">Explore Games</a>
           <a href="./games.html#genres" class="btn btn-ghost">Browse Categories</a>
         </div>
-      </div>
-      <div class="hero-shelf" aria-hidden="true">
-        <div class="shelf-track" id="heroShelf"></div>
       </div>
     </div>
   </section>
@@ -195,7 +192,6 @@
   </section>
 
 </main>
-</main>
 
 <!-- Footer -->
 <footer class="footer">
@@ -244,29 +240,12 @@
   (async function initHome() {
     const games = await loadGames();
 
-    // Hero shelf (duplicate list for seamless scroll loop)
-    const shelf = document.getElementById("heroShelf");
-    const shelfGames = games.slice(0, 6);
-    [...shelfGames, ...shelfGames, ...shelfGames].forEach(g => {
-      const item = document.createElement("div");
-      item.className = "shelf-card";
-      item.appendChild(buildCoverEl(g.cover, g.title, "shelf-cover"));
-      const info = document.createElement("div");
-      info.className = "shelf-info";
-      info.innerHTML = `<div class="t">${escapeHtml(g.title)}</div><div class="g">${escapeHtml((g.genre || [])[0] || "")}</div>`;
-      item.appendChild(info);
-      shelf.appendChild(item);
-    });
-
-    // Featured games: highest rated
     const featured = [...games].sort((a, b) => (b.rating || 0) - (a.rating || 0)).slice(0, 4);
     renderGameGrid(document.getElementById("featuredGrid"), featured);
 
-    // Latest games: most recent release date
     const latest = [...games].sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)).slice(0, 4);
     renderGameGrid(document.getElementById("latestGrid"), latest);
 
-    // Genre chips -> link to games page filtered
     const chipContainer = document.getElementById("genreChips");
     GEEPLAYS_GENRES.forEach(genre => {
       const a = document.createElement("a");
