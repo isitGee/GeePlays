@@ -1563,3 +1563,30 @@ h4 {
     height: 36px;
   }
 }
+.live-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(8, 8, 14, 0.65);
+  border: 1px solid var(--accent-cyan);
+  color: var(--accent-cyan);
+  backdrop-filter: blur(6px);
+}
+.live-badge::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  margin-right: 5px;
+  box-shadow: 0 0 6px var(--accent-cyan);
+}
