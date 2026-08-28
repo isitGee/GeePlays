@@ -55,6 +55,7 @@
   searchInput.addEventListener("input", debounce(() => {
     state.search = searchInput.value.trim();
     applyFilters();
+    updateLiveResults();
   }, 180));
 
   /* ---------- Rating slider ---------- */
@@ -80,6 +81,7 @@
     ratingVal.textContent = "0.0";
     document.querySelectorAll(".filter-check input").forEach(cb => (cb.checked = false));
     applyFilters();
+    updateLiveResults();
   }
   document.getElementById("clearFilters").addEventListener("click", resetAll);
   document.getElementById("emptyReset").addEventListener("click", resetAll);
@@ -133,5 +135,37 @@
     };
   }
 
+  /* ---------- Live results (RAWG, via proxy) ---------- */
+
+  const liveSection = document.getElementById("liveResultsSection");
+  const liveGrid = document.getElementById("liveGrid");
+  const liveLoading = document.getElementById("liveLoading");
+  let liveRequestId = 0;
+
+  async function updateLiveResults() {
+    const query = state.search;
+    if (!query || query.length < 2) {
+      liveSection.style.display = "none";
+      liveGrid.replaceChildren();
+      return;
+    }
+    const thisRequest = ++liveRequestId;
+    liveSection.style.display = "block";
+    liveLoading.style.display = "block";
+    liveGrid.replaceChildren();
+
+    const results = await rawgSearch(query, 8);
+
+    if (thisRequest !== liveRequestId) return; // a newer search superseded this one
+    liveLoading.style.display = "none";
+
+    if (!results.length) {
+      liveSection.style.display = "none";
+      return;
+    }
+    renderGameGrid(liveGrid, results);
+  }
+
   applyFilters();
+  updateLiveResults();
 })();
