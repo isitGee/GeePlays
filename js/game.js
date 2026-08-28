@@ -7,6 +7,7 @@
 (async function initGamePage() {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
+  const rawgId = params.get("rawg");
 
   const loadingState = document.getElementById("loadingState");
   const errorState = document.getElementById("errorState");
@@ -20,19 +21,30 @@
     document.getElementById("errorMessage").textContent = message;
   }
 
-  // Missing game ID
-  if (!id) {
+  // Missing game ID entirely
+  if (!id && !rawgId) {
     showError("No game selected", "Pick a game from the catalog to see its details.");
     return;
   }
 
-  const games = await loadGames();
-  const game = games.find(g => g.id === id || g.slug === id);
+  let game;
 
-  // Invalid game ID
-  if (!game) {
-    showError("Game not found", `We couldn't find a game matching "${id}".`);
-    return;
+  if (rawgId) {
+    game = await rawgGetGame(rawgId);
+    if (!game) {
+      showError(
+        "Game not found",
+        `We couldn't find a live match for that game. It may have been removed, or the live database isn't configured yet.`
+      );
+      return;
+    }
+  } else {
+    const games = await loadGames();
+    game = games.find(g => g.id === id || g.slug === id);
+    if (!game) {
+      showError("Game not found", `We couldn't find a game matching "${id}".`);
+      return;
+    }
   }
 
   loadingState.style.display = "none";
@@ -59,6 +71,14 @@
   document.getElementById("gameTitle").textContent = game.title;
 
   const heroTags = document.getElementById("heroTags");
+  if (game.source === "rawg") {
+    const livePill = document.createElement("span");
+    livePill.className = "tag-pill";
+    livePill.style.borderColor = "var(--accent-cyan)";
+    livePill.style.color = "var(--accent-cyan)";
+    livePill.textContent = "Live · via RAWG";
+    heroTags.appendChild(livePill);
+  }
   (game.tags || []).slice(0, 5).forEach(tag => {
     const pill = document.createElement("span");
     pill.className = "tag-pill";
@@ -85,10 +105,12 @@
   }
 
   const watchBtn = document.getElementById("watchBtn");
-  if (game.youtube) {
-    watchBtn.href = game.youtube;
+  const watchUrl = game.youtube || game.youtubeSearchUrl;
+  if (watchUrl) {
+    watchBtn.href = watchUrl;
+    watchBtn.textContent = game.youtube ? "Watch Gameplay" : "Search Gameplay on YouTube";
   } else {
-    watchBtn.style.display = "none"; // no YouTube URL: hide
+    watchBtn.style.display = "none"; // nothing to link to: hide
   }
 
   /* ---------- Description ---------- */
