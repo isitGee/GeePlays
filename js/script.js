@@ -96,11 +96,20 @@ function ratingMarkup(rating, size = "") {
 /* ---------- Game card ---------- */
 
 function buildGameCard(game) {
+  const isLive = game.source === "rawg";
   const card = document.createElement("a");
-  card.href = `game.html?id=${encodeURIComponent(game.id)}`;
+  card.href = isLive
+    ? `game.html?rawg=${encodeURIComponent(game.rawgId)}`
+    : `game.html?id=${encodeURIComponent(game.id)}`;
   card.className = "game-card fade-in";
 
   const cover = buildCoverEl(game.cover, game.title);
+  if (isLive) {
+    const badge = document.createElement("span");
+    badge.className = "live-badge";
+    badge.textContent = "Live";
+    cover.appendChild(badge);
+  }
   card.appendChild(cover);
 
   const genre = document.createElement("div");
