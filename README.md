@@ -80,6 +80,3 @@ I think that is a fair way to describe it: assisted by AI, not replaced by AI. I
 * Git and GitHub for version control, and the thing that actually pushes changes live.
 If you are building something similar and hit the same CORS wall I did, that is not a sign you are doing something wrong. It is just how browsers work, and a small proxy is the normal way around it.
  
-***
- 
-A couple of exact technical names above could not be respelled without being wrong: the real project name `geeplays-rawg-proxy` on Vercel, and CSS properties such as `border-radius`, which only exist spelled that way in the language itself.
