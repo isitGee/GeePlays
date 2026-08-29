@@ -1,12 +1,11 @@
 /* =========================================================
-   GeePlays — games.html logic
-   Search + filter (genre, platform, rating, tags) over the
-   full game catalog loaded from data/games.json.
+   GeePlays — games.html logic (RAWG-powered)
+   Browses RAWG's full catalog directly — genre/platform/tag filters
+   translate into RAWG query params, and results page in via "Load More"
+   instead of being limited to a small local list.
    ========================================================= */
 
-(async function initGamesPage() {
-  const games = await loadGames();
-
+(function initGamesPage() {
   const params = new URLSearchParams(window.location.search);
 
   const state = {
@@ -14,17 +13,14 @@
     genres: new Set(params.get("genre") ? [params.get("genre")] : []),
     platforms: new Set(),
     tags: new Set(),
-    minRating: 0
+    minRating: 0,
+    page: 1,
+    hasMore: false,
+    totalCount: 0,
+    allResults: []
   };
 
-  /* ---------- Build filter option lists from data ---------- */
-
-  function uniqueSorted(values) {
-    return [...new Set(values)].sort((a, b) => a.localeCompare(b));
-  }
-
-  const allPlatforms = uniqueSorted(games.flatMap(g => g.platforms || []));
-  const allTags = uniqueSorted(games.flatMap(g => g.tags || []));
+  /* ---------- Build filter checkboxes (fixed lists — RAWG-driven) ---------- */
 
   function buildCheckboxList(container, values, activeSet, onChange) {
     container.replaceChildren();
@@ -36,7 +32,7 @@
       input.checked = activeSet.has(value);
       input.addEventListener("change", () => {
         input.checked ? activeSet.add(value) : activeSet.delete(value);
-        onChange();
+        refresh();
       });
       label.appendChild(input);
       label.appendChild(document.createTextNode(value));
@@ -44,9 +40,9 @@
     });
   }
 
-  buildCheckboxList(document.getElementById("genreFilters"), GEEPLAYS_GENRES, state.genres, applyFilters);
-  buildCheckboxList(document.getElementById("platformFilters"), allPlatforms, state.platforms, applyFilters);
-  buildCheckboxList(document.getElementById("tagFilters"), allTags, state.tags, applyFilters);
+  buildCheckboxList(document.getElementById("genreFilters"), GEEPLAYS_GENRES, state.genres, refresh);
+  buildCheckboxList(document.getElementById("platformFilters"), Object.keys(PLATFORM_QUERY_MAP), state.platforms, refresh);
+  buildCheckboxList(document.getElementById("tagFilters"), BROWSE_TAGS, state.tags, refresh);
 
   /* ---------- Search field ---------- */
 
@@ -54,18 +50,17 @@
   searchInput.value = state.search;
   searchInput.addEventListener("input", debounce(() => {
     state.search = searchInput.value.trim();
-    applyFilters();
-    updateLiveResults();
-  }, 180));
+    refresh();
+  }, 300));
 
-  /* ---------- Rating slider ---------- */
+  /* ---------- Rating slider (applied client-side; RAWG has no min-rating param) ---------- */
 
   const ratingSlider = document.getElementById("ratingFilter");
   const ratingVal = document.getElementById("ratingFilterVal");
   ratingSlider.addEventListener("input", () => {
     state.minRating = parseFloat(ratingSlider.value);
     ratingVal.textContent = state.minRating.toFixed(1);
-    applyFilters();
+    render(); // client-side only — no need to re-fetch from RAWG
   });
 
   /* ---------- Clear filters ---------- */
@@ -80,8 +75,7 @@
     ratingSlider.value = 0;
     ratingVal.textContent = "0.0";
     document.querySelectorAll(".filter-check input").forEach(cb => (cb.checked = false));
-    applyFilters();
-    updateLiveResults();
+    refresh();
   }
   document.getElementById("clearFilters").addEventListener("click", resetAll);
   document.getElementById("emptyReset").addEventListener("click", resetAll);
@@ -92,39 +86,82 @@
   document.getElementById("filterToggle")?.addEventListener("click", () => panel.classList.add("open"));
   document.getElementById("filterClose")?.addEventListener("click", () => panel.classList.remove("open"));
 
-  /* ---------- Filtering logic ---------- */
+  /* ---------- Fetching ---------- */
 
-  function matches(game) {
-    if (state.search) {
-      const haystack = [
-        game.title, game.developer, game.publisher,
-        ...(game.genre || []), ...(game.tags || [])
-      ].join(" ").toLowerCase();
-      if (!haystack.includes(state.search.toLowerCase())) return false;
-    }
-    if (state.genres.size && !(game.genre || []).some(g => state.genres.has(g))) return false;
-    if (state.platforms.size && !(game.platforms || []).some(p => state.platforms.has(p))) return false;
-    if (state.tags.size && !(game.tags || []).some(t => state.tags.has(t))) return false;
-    if ((game.rating || 0) < state.minRating) return false;
-    return true;
+  const grid = document.getElementById("gamesGrid");
+  const empty = document.getElementById("emptyState");
+  const count = document.getElementById("resultsCount");
+  const loadMoreWrap = document.getElementById("loadMoreWrap");
+  const loadMoreBtn = document.getElementById("loadMoreBtn");
+
+  let requestId = 0;
+
+  async function fetchPage(page) {
+    return rawgBrowse({
+      search: state.search,
+      genres: [...state.genres],
+      platforms: [...state.platforms],
+      tags: [...state.tags],
+      ordering: state.search ? undefined : "-added",
+      page,
+      pageSize: 24
+    });
   }
 
-  function applyFilters() {
-    const results = games.filter(matches);
-    const grid = document.getElementById("gamesGrid");
-    const empty = document.getElementById("emptyState");
-    const count = document.getElementById("resultsCount");
+  async function refresh() {
+    const thisRequest = ++requestId;
+    state.page = 1;
+    state.allResults = [];
+    count.textContent = "Loading…";
+    grid.style.display = "grid";
+    empty.style.display = "none";
+    loadMoreWrap.style.display = "none";
+    grid.replaceChildren();
+    for (let i = 0; i < 8; i++) {
+      const sk = document.createElement("div");
+      sk.className = "skeleton";
+      sk.style.aspectRatio = "3/4";
+      grid.appendChild(sk);
+    }
 
-    if (results.length === 0) {
+    const { results, count: total, hasMore } = await fetchPage(1);
+    if (thisRequest !== requestId) return; // superseded by a newer filter change
+
+    state.allResults = results;
+    state.totalCount = total;
+    state.hasMore = hasMore;
+    render();
+  }
+
+  async function loadMore() {
+    state.page += 1;
+    loadMoreBtn.disabled = true;
+    loadMoreBtn.textContent = "Loading…";
+    const { results, hasMore } = await fetchPage(state.page);
+    state.allResults = state.allResults.concat(results);
+    state.hasMore = hasMore;
+    loadMoreBtn.disabled = false;
+    loadMoreBtn.textContent = "Load More Games";
+    render();
+  }
+  loadMoreBtn.addEventListener("click", loadMore);
+
+  function render() {
+    const visible = state.allResults.filter(g => (g.rating || 0) >= state.minRating);
+
+    if (visible.length === 0) {
       grid.style.display = "none";
       empty.style.display = "block";
+      loadMoreWrap.style.display = "none";
       count.textContent = "0 games found";
-    } else {
-      grid.style.display = "grid";
-      empty.style.display = "none";
-      count.textContent = `${results.length} game${results.length === 1 ? "" : "s"} found`;
-      renderGameGrid(grid, results);
+      return;
     }
+
+    grid.style.display = "grid";
+    empty.style.display = "none";
+    count.textContent = `Showing ${visible.length.toLocaleString()} of ${state.totalCount.toLocaleString()} games`;
+    renderGameGrid(grid, visible);
+    loadMoreWrap.style.display = state.hasMore ? "flex" : "none";
   }
 
   function debounce(fn, wait) {
@@ -135,37 +172,5 @@
     };
   }
 
-  /* ---------- Live results (RAWG, via proxy) ---------- */
-
-  const liveSection = document.getElementById("liveResultsSection");
-  const liveGrid = document.getElementById("liveGrid");
-  const liveLoading = document.getElementById("liveLoading");
-  let liveRequestId = 0;
-
-  async function updateLiveResults() {
-    const query = state.search;
-    if (!query || query.length < 2) {
-      liveSection.style.display = "none";
-      liveGrid.replaceChildren();
-      return;
-    }
-    const thisRequest = ++liveRequestId;
-    liveSection.style.display = "block";
-    liveLoading.style.display = "block";
-    liveGrid.replaceChildren();
-
-    const results = await rawgSearch(query, 8);
-
-    if (thisRequest !== liveRequestId) return; // a newer search superseded this one
-    liveLoading.style.display = "none";
-
-    if (!results.length) {
-      liveSection.style.display = "none";
-      return;
-    }
-    renderGameGrid(liveGrid, results);
-  }
-
-  applyFilters();
-  updateLiveResults();
+  refresh();
 })();
