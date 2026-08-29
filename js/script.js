@@ -147,7 +147,9 @@ function buildGameCard(game) {
 function renderGameGrid(container, games) {
   container.replaceChildren();
   games.forEach(g => container.appendChild(buildGameCard(g)));
-  observeFadeIns();
+  // Show immediately — these cards appear from typing/filtering, not from
+  // scrolling to them, so they shouldn't wait for a scroll-triggered reveal.
+  container.querySelectorAll(".fade-in").forEach(el => el.classList.add("in-view"));
 }
 
 /* ---------- Navbar ---------- */
