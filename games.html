@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Games — GeePlays</title>
-<meta name="description" content="Browse and filter the full GeePlays game catalog by genre, platform, rating and tags.">
+<meta name="description" content="Browse and filter GeePlays' full live game catalog, powered by RAWG.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./css/style.css">
@@ -60,14 +60,14 @@
 <main>
   <section class="section" style="padding-top:44px;">
     <div class="container">
-      <span class="eyebrow">Full catalog</span>
+      <span class="eyebrow">Powered by RAWG · 500,000+ games</span>
       <h1 class="section-title" style="margin-top:10px;">All Games</h1>
-      <p class="section-sub" style="margin-bottom:30px;">Search by title, or filter by genre, platform, rating and tags.</p>
+      <p class="section-sub" style="margin-bottom:30px;">Search or filter the live catalog — genre, platform, rating and tags.</p>
 
       <div class="games-toolbar">
         <div class="search-field">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-          <input type="text" id="pageSearch" placeholder="Search by title, developer, publisher, or tag…">
+          <input type="text" id="pageSearch" placeholder="Search by title…">
         </div>
       </div>
 
@@ -113,17 +113,8 @@
             <p>Try clearing a filter or searching a different term.</p>
             <button class="btn btn-primary" id="emptyReset">Reset Filters</button>
           </div>
-
-          <!-- Live results from RAWG, shown when a search term matches beyond the local catalog -->
-          <div id="liveResultsSection" style="display:none; margin-top:48px;">
-            <div class="section-head" style="margin-bottom:20px;">
-              <div>
-                <span class="eyebrow">Powered by RAWG</span>
-                <h2 class="section-title" style="font-size:20px; margin-top:8px;">More From the Full Database</h2>
-              </div>
-            </div>
-            <div class="results-count" id="liveLoading" style="display:none;">Searching live database…</div>
-            <div class="game-grid" id="liveGrid"></div>
+          <div id="loadMoreWrap" style="display:none; justify-content:center; margin-top:36px;">
+            <button class="btn btn-outline" id="loadMoreBtn">Load More Games</button>
           </div>
         </div>
       </div>
