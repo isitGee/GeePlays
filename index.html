@@ -242,13 +242,18 @@
 <script src="./js/support.js"></script>
 <script>
   (async function initHome() {
-    const games = await loadGames();
+    const featured = await rawgBrowse({ ordering: "-added", pageSize: 4 });
+    renderGameGrid(document.getElementById("featuredGrid"), featured.results);
 
-    const featured = [...games].sort((a, b) => (b.rating || 0) - (a.rating || 0)).slice(0, 4);
-    renderGameGrid(document.getElementById("featuredGrid"), featured);
-
-    const latest = [...games].sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)).slice(0, 4);
-    renderGameGrid(document.getElementById("latestGrid"), latest);
+    const today = new Date();
+    const ninetyDaysAgo = new Date(today.getTime() - 90 * 24 * 60 * 60 * 1000);
+    const fmt = d => d.toISOString().slice(0, 10);
+    const latest = await rawgBrowse({
+      ordering: "-released",
+      dates: `${fmt(ninetyDaysAgo)},${fmt(today)}`,
+      pageSize: 4
+    });
+    renderGameGrid(document.getElementById("latestGrid"), latest.results);
 
     const chipContainer = document.getElementById("genreChips");
     GEEPLAYS_GENRES.forEach(genre => {
