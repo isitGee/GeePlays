@@ -128,7 +128,7 @@
     let lightboxIndex = 0;
     screenshots.forEach((src, i) => {
       const thumb = document.createElement("div");
-      thumb.className = "screen-thumb fade-in";
+      thumb.className = "screen-thumb";
       const img = document.createElement("img");
       img.src = src;
       img.alt = `${game.title} screenshot ${i + 1}`;
@@ -144,7 +144,6 @@
       thumb.addEventListener("click", () => openLightbox(i));
       screensGrid.appendChild(thumb);
     });
-    observeFadeIns();
 
     const lightbox = document.getElementById("lightbox");
     const lightboxImg = document.getElementById("lightboxImg");
@@ -239,8 +238,6 @@
     row.innerHTML = `<span class="k">${escapeHtml(k)}</span><span class="v">${escapeHtml(v || "—")}</span>`;
     infoRows.appendChild(row);
   });
-
-  observeFadeIns();
 
   /* ---------- Helpers ---------- */
 

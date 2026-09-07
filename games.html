@@ -5,14 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Games — GeePlays</title>
 <meta name="description" content="Browse and filter GeePlays' full live game catalog, powered by RAWG.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
 
 <header class="navbar">
-  <div class="container navbar-inner">
+  <div class="navbar-inner">
     <a href="./index.html" class="logo">GeePlays<span class="accent-dot">.</span></a>
     <nav class="nav-links">
       <a href="./index.html">Home</a>
@@ -58,22 +56,22 @@
 </div>
 
 <main>
-  <section class="section" style="padding-top:44px;">
+  <section class="section" style="padding-top:36px;">
     <div class="container">
       <span class="eyebrow">Powered by RAWG · 500,000+ games</span>
-      <h1 class="section-title" style="margin-top:10px;">All Games</h1>
-      <p class="section-sub" style="margin-bottom:30px;">Search or filter the live catalog — genre, platform, rating and tags.</p>
+      <h1 class="section-title" style="margin-top:8px;">All Games</h1>
+      <p class="section-sub" style="margin-bottom:28px;">Search or filter the live catalog by genre, platform, rating, and tags. Results update in place — nothing is hidden behind scrolling.</p>
 
       <div class="games-toolbar">
         <div class="search-field">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-          <input type="text" id="pageSearch" placeholder="Search by title…">
+          <input type="text" id="pageSearch" placeholder="Search by title…" aria-label="Search games by title">
         </div>
       </div>
 
       <div class="games-layout">
-        <!-- Filters -->
-        <aside class="filters-panel" id="filtersPanel">
+        <!-- Filters: visible sidebar on desktop, slide-in panel on mobile -->
+        <aside class="filters-panel" id="filtersPanel" aria-label="Filters">
           <button class="icon-btn mobile-close filter-toggle" id="filterClose" style="position:absolute; top:16px; right:16px;" aria-label="Close filters">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
           </button>
@@ -91,7 +89,7 @@
           <div class="filter-group">
             <h4>Minimum Rating</h4>
             <div class="rating-slider-row">
-              <input type="range" id="ratingFilter" min="0" max="10" step="0.5" value="0">
+              <input type="range" id="ratingFilter" min="0" max="10" step="0.5" value="0" aria-label="Minimum rating">
               <span class="rating-slider-val" id="ratingFilterVal">0.0</span>
             </div>
           </div>
@@ -104,7 +102,7 @@
           <button class="btn btn-outline btn-sm btn-block" id="clearFilters">Clear All</button>
         </aside>
 
-        <!-- Grid -->
+        <!-- Results -->
         <div>
           <div class="results-count" id="resultsCount">Loading…</div>
           <div class="game-grid" id="gamesGrid"></div>
@@ -113,7 +111,7 @@
             <p>Try clearing a filter or searching a different term.</p>
             <button class="btn btn-primary" id="emptyReset">Reset Filters</button>
           </div>
-          <div id="loadMoreWrap" style="display:none; justify-content:center; margin-top:36px;">
+          <div id="loadMoreWrap" style="display:none; justify-content:center; margin-top:32px;">
             <button class="btn btn-outline" id="loadMoreBtn">Load More Games</button>
           </div>
         </div>

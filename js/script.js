@@ -2,6 +2,10 @@
    GeePlays — shared script
    Loaded on every page. Handles navigation, data loading,
    reusable card/rating rendering, and small UI behaviors.
+
+   Note: this version has no scroll-triggered reveal system.
+   Content renders and is visible immediately — scrolling is
+   just normal page navigation, per the Windows 11 redesign.
    ========================================================= */
 
 const GEEPLAYS_GENRES = [
@@ -101,7 +105,7 @@ function buildGameCard(game) {
   card.href = isLive
     ? `game.html?rawg=${encodeURIComponent(game.rawgId)}`
     : `game.html?id=${encodeURIComponent(game.id)}`;
-  card.className = "game-card fade-in";
+  card.className = "game-card";
 
   const cover = buildCoverEl(game.cover, game.title);
   if (isLive) {
@@ -147,9 +151,6 @@ function buildGameCard(game) {
 function renderGameGrid(container, games) {
   container.replaceChildren();
   games.forEach(g => container.appendChild(buildGameCard(g)));
-  // Show immediately — these cards appear from typing/filtering, not from
-  // scrolling to them, so they shouldn't wait for a scroll-triggered reveal.
-  container.querySelectorAll(".fade-in").forEach(el => el.classList.add("in-view"));
 }
 
 /* ---------- Navbar ---------- */
@@ -157,11 +158,6 @@ function renderGameGrid(container, games) {
 function initNavbar() {
   const nav = document.querySelector(".navbar");
   if (!nav) return;
-  const onScroll = () => {
-    nav.classList.toggle("scrolled", window.scrollY > 12);
-  };
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
 
   // Highlight current page link
   const path = window.location.pathname.split("/").pop() || "index.html";
@@ -215,25 +211,6 @@ function initSearchOverlay() {
   });
 }
 
-/* ---------- Fade-in on scroll ---------- */
-
-function observeFadeIns() {
-  const els = document.querySelectorAll(".fade-in:not(.in-view)");
-  if (!("IntersectionObserver" in window)) {
-    els.forEach(el => el.classList.add("in-view"));
-    return;
-  }
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("in-view");
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  els.forEach(el => io.observe(el));
-}
-
 /* ---------- Footer year ---------- */
 
 function initFooterYear() {
@@ -267,5 +244,4 @@ document.addEventListener("DOMContentLoaded", () => {
   initMobileMenu();
   initSearchOverlay();
   initFooterYear();
-  observeFadeIns();
 });
