@@ -6,6 +6,8 @@
 <title>GeePlays — TZ gamer for gamers everywhere</title>
 <meta name="description" content="GeePlays is a gaming discovery hub — browse games, check requirements, view screenshots, watch gameplay, and find where to get them.">
 <link rel="stylesheet" href="./css/style.css">
+<!-- Warm up the connection to the video file as early as possible -->
+<link rel="preload" as="video" href="./assets/hero.mp4" type="video/mp4">
 </head>
 <body>
 
@@ -17,6 +19,7 @@
       <a href="./index.html">Home</a>
       <a href="./games.html">Games</a>
       <a href="./news.html">News</a>
+      <a href="./support.html">Support</a>
       <a href="./about.html">About</a>
     </nav>
     <div class="nav-actions">
@@ -39,6 +42,7 @@
   <a href="./index.html">Home</a>
   <a href="./games.html">Games</a>
   <a href="./news.html">News</a>
+  <a href="./support.html">Support</a>
   <a href="./about.html">About</a>
 </div>
 
@@ -58,9 +62,19 @@
 
 <main>
 
-  <!-- Hero (video background preserved from previous design) -->
+  <!-- Hero: video dominant, poster shown instantly while it buffers,
+       light gradient fade instead of a glass card so the video reads
+       clearly rather than sitting behind a frosted panel. -->
   <section class="hero">
-    <video class="hero-video" autoplay muted loop playsinline aria-hidden="true">
+    <video
+      class="hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      poster="./assets/hero-poster.jpg"
+      aria-hidden="true">
       <source src="./assets/hero.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay" aria-hidden="true"></div>
@@ -173,25 +187,6 @@
     </div>
   </section>
 
-  <hr class="divider">
-
-  <!-- Support Gee -->
-  <section class="section" id="supportSection">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <span class="eyebrow">Support</span>
-          <h2 class="section-title" id="supportTitle">Support Gee</h2>
-        </div>
-      </div>
-      <div id="supportContent">
-        <p id="supportIntro"></p>
-        <div id="mobileMoneyList" class="support-list"></div>
-        <div id="bankDetails" class="support-list"></div>
-      </div>
-    </div>
-  </section>
-
 </main>
 
 <!-- Footer -->
@@ -208,6 +203,7 @@
           <li><a href="./index.html">Home</a></li>
           <li><a href="./games.html">Games</a></li>
           <li><a href="./news.html">News</a></li>
+          <li><a href="./support.html">Support</a></li>
           <li><a href="./about.html">About</a></li>
         </ul>
       </div>
