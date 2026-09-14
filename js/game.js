@@ -1,7 +1,8 @@
 /* =========================================================
    GeePlays — game.html logic
-   Reads ?id=<slug> from the URL, loads the matching game
-   from data/games.json, and populates the page.
+   Reads ?id=<slug> or ?rawg=<id> from the URL and loads the
+   game through the catalog facade: live RAWG first, saved
+   picks as a graceful fallback.
    ========================================================= */
 
 (async function initGamePage() {
@@ -13,12 +14,23 @@
   const errorState = document.getElementById("errorState");
   const content = document.getElementById("gameContent");
 
-  function showError(title, message) {
+  function showError(title, message, actionHref, actionLabel) {
     loadingState.style.display = "none";
     content.style.display = "none";
     errorState.style.display = "block";
     document.getElementById("errorTitle").textContent = title;
     document.getElementById("errorMessage").textContent = message;
+
+    const action = errorState.querySelector(".btn");
+    if (action) {
+      if (actionHref) {
+        action.href = actionHref;
+        action.textContent = actionLabel || "Browse All Games";
+        action.style.display = "inline-flex";
+      } else {
+        action.style.display = "none";
+      }
+    }
   }
 
   // Missing game ID entirely
@@ -27,36 +39,50 @@
     return;
   }
 
-  let game;
+  const { game, degraded, notFound, message } = await catalogGetGame({ id, rawgId });
 
-  if (rawgId) {
-    game = await rawgGetGame(rawgId);
-    if (!game) {
+  if (!game) {
+    if (degraded) {
+      showError(
+        "Live data is offline",
+        message || "Live game data is temporarily unavailable, and this game isn't in the saved picks.",
+        "./games.html",
+        "Browse Saved Picks"
+      );
+    } else if (rawgId) {
       showError(
         "Game not found",
-        `We couldn't find a live match for that game. It may have been removed, or the live database isn't configured yet.`
+        "We couldn't find a live match for that game. It may have been removed from the database."
       );
-      return;
+    } else {
+      showError(
+        "Game not found",
+        `We couldn't find a game matching "${id}".`
+      );
     }
-  } else {
-    const games = await loadGames();
-    game = games.find(g => g.id === id || g.slug === id);
-    if (!game) {
-      showError("Game not found", `We couldn't find a game matching "${id}".`);
-      return;
-    }
+    return;
   }
 
   loadingState.style.display = "none";
   content.style.display = "block";
   document.getElementById("pageTitle").textContent = `${game.title} — GeePlays`;
 
+  // Subtle note when this is a saved pick (live data unavailable).
+  if (degraded && game.source === "local") {
+    const hero = document.querySelector(".game-hero");
+    if (hero) {
+      const note = buildStatusNote(
+        "Live game data is temporarily unavailable — showing the saved version of this game."
+      );
+      note.style.marginBottom = "16px";
+      hero.parentElement.insertBefore(note, hero);
+    }
+  }
+
   /* ---------- Hero banner (falls back to gradient cover) ---------- */
   const bannerBg = document.getElementById("bannerBg");
   const bannerImg = new Image();
-  bannerImg.onload = () => {
-    bannerBg.appendChild(bannerImg);
-  };
+  bannerImg.onload = () => bannerBg.appendChild(bannerImg);
   bannerImg.onerror = () => {
     const fb = document.createElement("div");
     fb.className = `cover-fallback pal-${paletteIndex(game.title)}`;
@@ -74,10 +100,15 @@
   if (game.source === "rawg") {
     const livePill = document.createElement("span");
     livePill.className = "tag-pill";
-    livePill.style.borderColor = "var(--accent-cyan)";
-    livePill.style.color = "var(--accent-cyan)";
+    livePill.style.borderColor = "#6fc4ff";
+    livePill.style.color = "#6fc4ff";
     livePill.textContent = "Live · via RAWG";
     heroTags.appendChild(livePill);
+  } else {
+    const pickPill = document.createElement("span");
+    pickPill.className = "tag-pill";
+    pickPill.textContent = "Saved Pick";
+    heroTags.appendChild(pickPill);
   }
   (game.tags || []).slice(0, 5).forEach(tag => {
     const pill = document.createElement("span");
@@ -101,7 +132,7 @@
     getBtn.href = game.download.url;
     getBtn.textContent = game.download.label || "Get Game";
   } else {
-    getBtn.style.display = "none"; // no download URL: hide rather than break
+    getBtn.style.display = "none";
   }
 
   const watchBtn = document.getElementById("watchBtn");
@@ -110,7 +141,7 @@
     watchBtn.href = watchUrl;
     watchBtn.textContent = game.youtube ? "Watch Gameplay" : "Search Gameplay on YouTube";
   } else {
-    watchBtn.style.display = "none"; // nothing to link to: hide
+    watchBtn.style.display = "none";
   }
 
   /* ---------- Description ---------- */
@@ -133,6 +164,7 @@
       img.src = src;
       img.alt = `${game.title} screenshot ${i + 1}`;
       img.loading = "lazy";
+      img.decoding = "async";
       img.onerror = () => {
         const fb = document.createElement("div");
         fb.className = `cover-fallback pal-${(paletteIndex(game.title) + i + 1) % 6}`;
@@ -142,6 +174,15 @@
       };
       thumb.appendChild(img);
       thumb.addEventListener("click", () => openLightbox(i));
+      thumb.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openLightbox(i);
+        }
+      });
+      thumb.tabIndex = 0;
+      thumb.setAttribute("role", "button");
+      thumb.setAttribute("aria-label", `View screenshot ${i + 1} full size`);
       screensGrid.appendChild(thumb);
     });
 
@@ -178,7 +219,7 @@
   const videoId = extractYouTubeId(game.youtube);
 
   if (!videoId) {
-    gameplayBlock.style.display = "none"; // no YouTube URL: hide the section
+    gameplayBlock.style.display = "none";
   } else {
     const iframe = document.createElement("iframe");
     iframe.src = `https://www.youtube.com/embed/${videoId}`;
@@ -197,7 +238,7 @@
   function renderRequirements(tier) {
     const data = req[tier];
     reqTable.replaceChildren();
-    if (!data) {
+    if (!data || !Object.keys(data).length) {
       const row = document.createElement("div");
       row.className = "req-row";
       row.innerHTML = `<dt>—</dt><dd>No ${tier} requirements listed for this game.</dd>`;

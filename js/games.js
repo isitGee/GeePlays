@@ -1,8 +1,9 @@
 /* =========================================================
-   GeePlays — games.html logic (RAWG-powered)
-   Browses RAWG's full catalog directly — genre/platform/tag filters
-   translate into RAWG query params, and results page in via "Load More"
-   instead of being limited to a small local list.
+   GeePlays — games.html logic
+   Browses the catalog through the facade (js/catalog.js):
+   live RAWG first, saved picks as an automatic fallback.
+   Genre/platform/tag filters translate to query params for
+   live data and to local matching for saved picks.
    ========================================================= */
 
 (function initGamesPage() {
@@ -17,10 +18,22 @@
     page: 1,
     hasMore: false,
     totalCount: 0,
-    allResults: []
+    allResults: [],
+    source: "rawg",
+    degraded: false
   };
 
-  /* ---------- Build filter checkboxes (fixed lists — RAWG-driven) ---------- */
+  /* ---------- DOM ---------- */
+
+  const grid = document.getElementById("gamesGrid");
+  const empty = document.getElementById("emptyState");
+  const count = document.getElementById("resultsCount");
+  const loadMoreWrap = document.getElementById("loadMoreWrap");
+  const loadMoreBtn = document.getElementById("loadMoreBtn");
+  const statusHost = document.getElementById("catalogStatus");
+  const searchInput = document.getElementById("pageSearch");
+
+  /* ---------- Filter checkboxes ---------- */
 
   function buildCheckboxList(container, values, activeSet, onChange) {
     container.replaceChildren();
@@ -32,7 +45,7 @@
       input.checked = activeSet.has(value);
       input.addEventListener("change", () => {
         input.checked ? activeSet.add(value) : activeSet.delete(value);
-        refresh();
+        onChange();
       });
       label.appendChild(input);
       label.appendChild(document.createTextNode(value));
@@ -46,21 +59,20 @@
 
   /* ---------- Search field ---------- */
 
-  const searchInput = document.getElementById("pageSearch");
   searchInput.value = state.search;
   searchInput.addEventListener("input", debounce(() => {
     state.search = searchInput.value.trim();
     refresh();
   }, 300));
 
-  /* ---------- Rating slider (applied client-side; RAWG has no min-rating param) ---------- */
+  /* ---------- Rating slider (client-side; neither source has min-rating) ---------- */
 
   const ratingSlider = document.getElementById("ratingFilter");
   const ratingVal = document.getElementById("ratingFilterVal");
   ratingSlider.addEventListener("input", () => {
     state.minRating = parseFloat(ratingSlider.value);
     ratingVal.textContent = state.minRating.toFixed(1);
-    render(); // client-side only — no need to re-fetch from RAWG
+    render();
   });
 
   /* ---------- Clear filters ---------- */
@@ -80,24 +92,31 @@
   document.getElementById("clearFilters").addEventListener("click", resetAll);
   document.getElementById("emptyReset").addEventListener("click", resetAll);
 
-  /* ---------- Mobile filter panel toggle ---------- */
+  /* ---------- Mobile filter panel ---------- */
 
   const panel = document.getElementById("filtersPanel");
   document.getElementById("filterToggle")?.addEventListener("click", () => panel.classList.add("open"));
   document.getElementById("filterClose")?.addEventListener("click", () => panel.classList.remove("open"));
 
-  /* ---------- Fetching ---------- */
+  /* ---------- Status note (degraded fallback) ---------- */
 
-  const grid = document.getElementById("gamesGrid");
-  const empty = document.getElementById("emptyState");
-  const count = document.getElementById("resultsCount");
-  const loadMoreWrap = document.getElementById("loadMoreWrap");
-  const loadMoreBtn = document.getElementById("loadMoreBtn");
+  function renderStatus() {
+    if (!statusHost) return;
+    statusHost.replaceChildren();
+    if (state.degraded) {
+      statusHost.appendChild(buildStatusNote(
+        "Live game data is temporarily unavailable — showing saved picks instead.",
+        refresh
+      ));
+    }
+  }
+
+  /* ---------- Fetching ---------- */
 
   let requestId = 0;
 
   async function fetchPage(page) {
-    return rawgBrowse({
+    return catalogBrowse({
       search: state.search,
       genres: [...state.genres],
       platforms: [...state.platforms],
@@ -116,20 +135,18 @@
     grid.style.display = "grid";
     empty.style.display = "none";
     loadMoreWrap.style.display = "none";
-    grid.replaceChildren();
-    for (let i = 0; i < 8; i++) {
-      const sk = document.createElement("div");
-      sk.className = "skeleton";
-      sk.style.aspectRatio = "3/4";
-      grid.appendChild(sk);
-    }
+    statusHost && statusHost.replaceChildren();
+    buildSkeletonCards(grid, 8);
 
-    const { results, count: total, hasMore } = await fetchPage(1);
-    if (thisRequest !== requestId) return; // superseded by a newer filter change
+    const result = await fetchPage(1);
+    if (thisRequest !== requestId) return; // superseded by a newer change
 
-    state.allResults = results;
-    state.totalCount = total;
-    state.hasMore = hasMore;
+    state.allResults = result.results;
+    state.totalCount = result.count;
+    state.hasMore = result.hasMore;
+    state.source = result.source;
+    state.degraded = result.degraded;
+    renderStatus();
     render();
   }
 
@@ -137,14 +154,16 @@
     state.page += 1;
     loadMoreBtn.disabled = true;
     loadMoreBtn.textContent = "Loading…";
-    const { results, hasMore } = await fetchPage(state.page);
-    state.allResults = state.allResults.concat(results);
-    state.hasMore = hasMore;
+    const result = await fetchPage(state.page);
+    state.allResults = state.allResults.concat(result.results);
+    state.hasMore = result.hasMore;
     loadMoreBtn.disabled = false;
     loadMoreBtn.textContent = "Load More Games";
     render();
   }
   loadMoreBtn.addEventListener("click", loadMore);
+
+  /* ---------- Render ---------- */
 
   function render() {
     const visible = state.allResults.filter(g => (g.rating || 0) >= state.minRating);
@@ -159,7 +178,9 @@
 
     grid.style.display = "grid";
     empty.style.display = "none";
-    count.textContent = `Showing ${visible.length.toLocaleString()} of ${state.totalCount.toLocaleString()} games`;
+    const sourceLabel = state.degraded ? "saved picks" : "live catalog";
+    count.textContent =
+      `Showing ${visible.length.toLocaleString()} of ${state.totalCount.toLocaleString()} games · ${sourceLabel}`;
     renderGameGrid(grid, visible);
     loadMoreWrap.style.display = state.hasMore ? "flex" : "none";
   }

@@ -1,7 +1,9 @@
 /* =========================================================
    GeePlays — news.html logic
-   Talks only to newsService.getGamingNews() — has no idea
-   whether that's RSS, an API, or anything else underneath.
+   Talks only to newsService.getGamingNews() — which returns
+   { articles, source, degraded, message }. The page renders
+   the same either way and shows a small notice when the live
+   feed is unavailable and saved stories are shown instead.
    ========================================================= */
 
 (function initNewsPage() {
@@ -14,6 +16,7 @@
   const featuredWrap = document.getElementById("featuredStoryWrap");
   const grid = document.getElementById("newsGrid");
   const retryBtn = document.getElementById("newsRetryBtn");
+  const statusHost = document.getElementById("newsStatus");
 
   let allArticles = [];
   let activeCategory = null;
@@ -27,8 +30,15 @@
 
   async function load() {
     showState("loading");
+    if (statusHost) statusHost.replaceChildren();
     try {
-      allArticles = await getGamingNews();
+      const result = await getGamingNews();
+      allArticles = result.articles || [];
+
+      if (statusHost && result.degraded) {
+        statusHost.appendChild(buildStatusNote(result.message, load));
+      }
+
       if (!allArticles.length) {
         showState("empty");
         return;
@@ -91,7 +101,6 @@
 
     const imgWrap = document.createElement("div");
     imgWrap.className = "cover nf-image";
-    imgWrap.style.borderRadius = "0";
     imgWrap.appendChild(buildArticleImage(article));
     card.appendChild(imgWrap);
 
@@ -100,14 +109,14 @@
     body.innerHTML = `
       <span class="news-cat">${escapeHtml(article.category)}</span>
       <h2 style="font-size:24px; margin:12px 0 10px; line-height:1.3;">${escapeHtml(article.title)}</h2>
-      <p style="color:var(--color-text-secondary); font-size:14.5px; margin-bottom:16px;">${escapeHtml(article.description)}</p>
+      <p style="color:var(--text-secondary); font-size:14.5px; margin-bottom:16px;">${escapeHtml(article.description)}</p>
       <div class="news-meta-row" style="margin-bottom:16px;">
         <span class="news-source">${escapeHtml(article.source)}</span>
         <span>${escapeHtml(formatDate(article.publishedAt))}</span>
       </div>
     `;
     const link = document.createElement("a");
-    link.href = article.articleUrl;
+    link.href = article.articleUrl || "#";
     link.target = "_blank";
     link.rel = "noopener noreferrer";
     link.className = "btn btn-primary";
@@ -139,7 +148,7 @@
       </div>
     `;
     const link = document.createElement("a");
-    link.href = article.articleUrl;
+    link.href = article.articleUrl || "#";
     link.target = "_blank";
     link.rel = "noopener noreferrer";
     link.className = "news-read-link";
@@ -151,17 +160,27 @@
   }
 
   function buildArticleImage(article) {
-    const img = document.createElement("img");
-    img.src = article.image || "";
-    img.alt = article.title;
-    img.loading = "lazy";
-    img.onerror = () => {
-      const fb = document.createElement("div");
-      fb.className = `cover-fallback pal-${paletteIndex(article.title || article.source)}`;
-      fb.innerHTML = `<span class="initial">${escapeHtml(article.category || "News")}</span>`;
-      img.replaceWith(fb);
-    };
-    return img;
+    // Returns either an <img> or a placeholder, so callers can drop it
+    // directly into their single .cover wrapper.
+    if (article.image) {
+      const img = document.createElement("img");
+      img.src = article.image;
+      img.alt = article.title;
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.onerror = () => {
+        img.replaceWith(buildPlaceholder(article));
+      };
+      return img;
+    }
+    return buildPlaceholder(article);
+  }
+
+  function buildPlaceholder(article) {
+    const fb = document.createElement("div");
+    fb.className = `cover-fallback pal-${paletteIndex(article.title || article.source)}`;
+    fb.innerHTML = `<span class="initial">${escapeHtml(article.category || "News")}</span>`;
+    return fb;
   }
 
   function formatDate(dateStr) {

@@ -1,11 +1,8 @@
 /* =========================================================
    GeePlays — shared script
-   Loaded on every page. Handles navigation, data loading,
-   reusable card/rating rendering, and small UI behaviors.
-
-   Note: this version has no scroll-triggered reveal system.
-   Content renders and is visible immediately — scrolling is
-   just normal page navigation, per the Windows 11 redesign.
+   Loaded on every page. Handles navigation, theme, reusable
+   card/rating rendering, loading skeletons, status notes and
+   small UI behaviors.
    ========================================================= */
 
 const GEEPLAYS_GENRES = [
@@ -13,34 +10,9 @@ const GEEPLAYS_GENRES = [
   "Sports", "Strategy", "Horror", "Multiplayer"
 ];
 
-/* ---------- Data loading ---------- */
-
-async function loadGames() {
-  try {
-    const res = await fetch("data/games.json");
-    if (!res.ok) throw new Error("Failed to load games.json");
-    return await res.json();
-  } catch (err) {
-    console.error("GeePlays: could not load game data.", err);
-    return [];
-  }
-}
-
-async function loadNews() {
-  try {
-    const res = await fetch("data/news.json");
-    if (!res.ok) throw new Error("Failed to load news.json");
-    return await res.json();
-  } catch (err) {
-    console.error("GeePlays: could not load news data.", err);
-    return [];
-  }
-}
-
 /* ---------- Cover art fallback ----------
    Every card image is given an onerror handler that swaps
-   in a generated gradient + initials placeholder. This keeps
-   the site fully functional before real artwork is added. */
+   in a generated gradient + initials placeholder. */
 
 function coverInitials(title) {
   return title
@@ -66,6 +38,7 @@ function buildCoverEl(src, title, extraClass) {
   img.src = src;
   img.alt = `${title} cover art`;
   img.loading = "lazy";
+  img.decoding = "async";
   img.onerror = () => {
     const fallback = document.createElement("div");
     fallback.className = `cover-fallback pal-${paletteIndex(title)}`;
@@ -85,7 +58,8 @@ function escapeHtml(str) {
 /* ---------- Rating bar (signature UI element) ---------- */
 
 function ratingMarkup(rating, size = "") {
-  const filled = Math.round((rating / 10) * 10); // 10 segments
+  const num = Number(rating) || 0;
+  const filled = Math.round((num / 10) * 10); // 10 segments
   let bars = "";
   for (let i = 0; i < 10; i++) {
     bars += `<i class="${i < filled ? "on" : ""}"></i>`;
@@ -93,7 +67,7 @@ function ratingMarkup(rating, size = "") {
   return `
     <span class="rating ${size}">
       <span class="rating-bars">${bars}</span>
-      <span class="rating-num">${rating.toFixed(1)}<small>/10</small></span>
+      <span class="rating-num">${num.toFixed(1)}<small>/10</small></span>
     </span>`;
 }
 
@@ -106,6 +80,7 @@ function buildGameCard(game) {
     ? `game.html?rawg=${encodeURIComponent(game.rawgId)}`
     : `game.html?id=${encodeURIComponent(game.id)}`;
   card.className = "game-card";
+  card.setAttribute("aria-label", `${game.title} — view details`);
 
   const cover = buildCoverEl(game.cover, game.title);
   if (isLive) {
@@ -153,19 +128,94 @@ function renderGameGrid(container, games) {
   games.forEach(g => container.appendChild(buildGameCard(g)));
 }
 
+/* ---------- Loading skeletons (content-aware) ---------- */
+
+function buildSkeletonCards(container, count = 4) {
+  container.replaceChildren();
+  for (let i = 0; i < count; i++) {
+    const card = document.createElement("div");
+    card.className = "skeleton-card";
+    card.setAttribute("aria-hidden", "true");
+    card.innerHTML = `
+      <div class="skeleton sk-cover"></div>
+      <div class="skeleton sk-line" style="width:60%"></div>
+      <div class="skeleton sk-line short"></div>`;
+    container.appendChild(card);
+  }
+}
+
+/* ---------- Status note (degraded data notice) ---------- */
+
+function buildStatusNote(message, onRetry) {
+  const note = document.createElement("div");
+  note.className = "status-note";
+  note.setAttribute("role", "status");
+
+  const icon = document.createElement("span");
+  icon.className = "status-icon";
+  icon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>`;
+  note.appendChild(icon);
+
+  const text = document.createElement("span");
+  text.innerHTML = `<strong>Heads up:</strong> ${escapeHtml(message)}`;
+  note.appendChild(text);
+
+  if (typeof onRetry === "function") {
+    const retry = document.createElement("button");
+    retry.type = "button";
+    retry.className = "status-retry";
+    retry.textContent = "Retry live data";
+    retry.addEventListener("click", onRetry);
+    const spacer = document.createTextNode(" ");
+    text.appendChild(spacer);
+    text.appendChild(retry);
+  }
+
+  return note;
+}
+
 /* ---------- Navbar ---------- */
 
 function initNavbar() {
   const nav = document.querySelector(".navbar");
   if (!nav) return;
 
-  // Highlight current page link
   const path = window.location.pathname.split("/").pop() || "index.html";
   document.querySelectorAll(".nav-links a, .mobile-menu a").forEach(a => {
     const href = a.getAttribute("href").split("?")[0];
     if (href === path || (path === "" && href === "index.html")) {
       a.classList.add("active");
     }
+  });
+}
+
+/* ---------- Theme (dark/light) ---------- */
+
+function initTheme() {
+  const toggle = document.querySelector("[data-theme-toggle]");
+  if (!toggle) return;
+
+  const root = document.documentElement;
+
+  function apply(theme) {
+    root.setAttribute("data-theme", theme);
+    try { localStorage.setItem("geeplays-theme", theme); } catch (e) { /* private mode */ }
+    updateLabel(theme);
+  }
+
+  function updateLabel(theme) {
+    const next = theme === "dark" ? "light" : "dark";
+    toggle.setAttribute("aria-label", `Switch to ${next} theme`);
+    toggle.setAttribute("aria-pressed", String(theme === "light"));
+    toggle.title = `Switch to ${next} theme`;
+  }
+
+  // The inline <head> script already set the initial theme.
+  updateLabel(root.getAttribute("data-theme") || "dark");
+
+  toggle.addEventListener("click", () => {
+    const current = root.getAttribute("data-theme") === "light" ? "light" : "dark";
+    apply(current === "light" ? "dark" : "light");
   });
 }
 
@@ -206,7 +256,7 @@ function initSearchOverlay() {
 
   form?.addEventListener("submit", (e) => {
     e.preventDefault();
-    const q = input.value.trim();
+    const q = (input?.value || "").trim();
     window.location.href = `games.html?search=${encodeURIComponent(q)}`;
   });
 }
@@ -244,4 +294,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initMobileMenu();
   initSearchOverlay();
   initFooterYear();
+  initTheme();
 });

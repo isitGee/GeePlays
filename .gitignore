@@ -1,0 +1,10 @@
+# Dependencies (Vercel serverless functions)
+node_modules/
+
+# Vercel
+.vercel/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
