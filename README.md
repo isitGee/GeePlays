@@ -35,13 +35,66 @@ The fix has two parts:
   data first and falls back to the local dataset automatically, so the site
   works today even while the proxy is not yet redeployed.
 
+### Live status (checked 2026-09-14)
+
+Both proxies were verified working from the deployed
+`geeplays-rawg-proxy-isitgee.vercel.app`: `/api/rawg` returns live RAWG data
+and `/api/news` returns current stories from Xbox Wire, PlayStation Blog,
+Nintendo Life, and PC Gamer. The GitHub Pages site is serving this tree.
+
+**But the check found a real problem: the RAWG key was leaking to every
+visitor.** RAWG's API echoes the key inside its `next` / `previous`
+pagination URLs, and the proxy was forwarding RAWG's body verbatim — so the
+key sat in plain text in the JSON that every browser (and anyone who curls
+the proxy) can read. The fix, in `api/rawg.js`:
+
+- `next` / `previous` are **scrubbed server-side** and replaced with plain
+  booleans (the frontend only ever needs "are there more pages?").
+- Non-OK responses are replaced with a small generic error object — the
+  upstream body is never forwarded verbatim, so nothing upstream can ever
+  sneak a secret or a scary message to a visitor.
+- Error responses get `Cache-Control: no-store` so a transient 429/5xx
+  doesn't stick at Vercel's CDN for 30 minutes.
+
+> ⚠️ **Action item:** because the old key was exposed to the public internet
+> for a while, treat it as compromised. Generate a new key on your RAWG
+> dashboard (https://rawg.io/apidocs → your account) and update the
+> `RAWG_API_KEY` environment variable in the Vercel project. Everything else
+> keeps working with the new key — no code change needed.
+
+### What else got fixed in this round
+
+- **Hero video, real compression** — `assets/hero.mp4` went from 8 MB /
+  1080p to ~1.9 MB / 720p H.264 (2-pass, `+faststart`), with a matching
+  720p poster frame. The poster shows instantly, and the (now tiny) file
+  starts playing fast instead of sitting on a spinner. The glass overlay
+  over the video was lightened so the footage actually reads.
+- **Payment cards are now full-surface brand cards** — each card's
+  background is the exact dominant color sampled from its logo file (PIL):
+  Vodacom `#E90004` red, Airtel `#FFFFFF` white (red `#E20010` "Pay Now"),
+  NMB `#2056AE` blue. The logo sits on the card with no box or border, so
+  logo and card are one continuous surface. NMB gets a real "Pay Now" that
+  dials the verified NMB Mkononi USSD (`*150*66#`, from nmbbank.co.tz).
+  Still no preset amounts — the amount is always chosen by the person
+  paying.
+- **News images** — the proxy now resolves relative/protocol-relative image
+  URLs from RSS feeds and skips `data:` URIs; the UI only ever tries
+  absolute `http(s)` images and falls back to a placeholder that matches
+  the card surface, so a dead external image never leaves a broken card.
+- **Game detail page** — "game doesn't exist" (404 from RAWG) is now told
+  apart from "proxy is down", so a deleted game shows a proper
+  not-found state instead of a false "live data offline" banner.
+- Light/dark theme syncs the mobile browser chrome color too
+  (`theme-color` meta).
+
 ### To reconnect live RAWG data
 
 1. Redeploy this repo to the **same Vercel project** (root = repo root).
-2. Add the `RAWG_API_KEY` environment variable in the Vercel dashboard.
+2. Set (or **rotate**) the `RAWG_API_KEY` environment variable in the
+   Vercel dashboard — see the action item above.
 3. Confirm `https://<your-project>.vercel.app/api/rawg?path=games&page_size=1`
-   returns JSON. If you rename the project, update the two URLs in
-   `js/config.js`.
+   returns JSON, and that the `next` field is a boolean, **not a URL**. If
+   you rename the project, update the two URLs in `js/config.js`.
 
 No key is ever committed — it stays server-side. This whole site still runs
 for **zero cost** on GitHub Pages + Vercel's free tier.

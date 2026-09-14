@@ -159,12 +159,26 @@
     return card;
   }
 
+  function usableImageUrl(u) {
+    // Only absolute http(s) URLs are worth trying — a relative path from
+    // an RSS feed is meaningless on our origin, and data:/javascript:
+    // URIs must never reach src.
+    if (typeof u !== "string") return "";
+    const t = u.trim();
+    if (/^https:\/\//i.test(t)) return t;
+    if (/^http:\/\//i.test(t)) return t;
+    if (/^\/\/[^/]+\//i.test(t)) return "https:" + t; // protocol-relative
+    return "";
+  }
+
   function buildArticleImage(article) {
     // Returns either an <img> or a placeholder, so callers can drop it
-    // directly into their single .cover wrapper.
-    if (article.image) {
+    // directly into their single .cover wrapper. Every card looks
+    // complete either way — the placeholder matches the card surface.
+    const src = usableImageUrl(article.image);
+    if (src) {
       const img = document.createElement("img");
-      img.src = article.image;
+      img.src = src;
       img.alt = article.title;
       img.loading = "lazy";
       img.decoding = "async";
