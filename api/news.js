@@ -91,7 +91,7 @@ function normalizeItem(item, feed) {
   return {
     title: stripHtml(item.title || "Untitled"),
     description: stripHtml(item.contentSnippet || item.summary || item.contentEncoded || "").slice(0, 220),
-    image: extractImage(item),
+    image: extractImage(item, feed),
     source: feed.source,
     sourceUrl: safeOrigin(feed.url),
     articleUrl: item.link || feed.url,
@@ -100,12 +100,43 @@ function normalizeItem(item, feed) {
   };
 }
 
-function extractImage(item) {
-  if (item.enclosure && item.enclosure.url) return item.enclosure.url;
-  if (item.mediaContent && item.mediaContent.$ && item.mediaContent.$.url) return item.mediaContent.$.url;
+function extractImage(item, feed) {
+  const enclosure = item.enclosure && item.enclosure.url;
+  if (enclosure) return safeImageUrl(enclosure, feed);
+  if (item.mediaContent && item.mediaContent.$ && item.mediaContent.$.url) {
+    return safeImageUrl(item.mediaContent.$.url, feed);
+  }
   const html = item.contentEncoded || item.content || "";
-  const match = html.match(/<img[^>]+src="([^"]+)"/);
-  return match ? match[1] : "";
+  // Some feeds use double quotes, some single — match both.
+  const match = html.match(/<img[^>]+src=["']([^"']+)["']/i);
+  return match ? safeImageUrl(match[1], feed) : "";
+}
+
+/**
+ * Make an extracted image URL actually loadable in a visitor's browser:
+ * resolve relative/protocol-relative URLs against the feed we came from,
+ * and drop anything that isn't plain http(s) (data: URIs, javascript:, …).
+ * Returns "" when nothing usable is found — the UI then renders its
+ * branded placeholder instead of a broken image.
+ */
+function safeImageUrl(src, feed) {
+  if (!src) return "";
+  const candidate = String(src).trim();
+  if (/^(data|javascript|blob|vbscript):/i.test(candidate)) return "";
+  if (/^\/\//i.test(candidate)) return "https:" + candidate;
+  if (/^https?:\/\//i.test(candidate)) {
+    try { return new URL(candidate).href; } catch { return ""; }
+  }
+  // Relative URL — resolve it against the feed's own URL (relative to
+  // the article link would usually land on a nonexistent article path).
+  const base = feed && feed.url;
+  if (!base) return "";
+  try {
+    const u = new URL(candidate, base);
+    return u.protocol === "https:" || u.protocol === "http:" ? u.href : "";
+  } catch {
+    return "";
+  }
 }
 
 function stripHtml(str) {

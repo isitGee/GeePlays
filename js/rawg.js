@@ -102,9 +102,13 @@ async function rawgFetch(path, params = {}) {
   try {
     const res = await fetch(key, { signal: controller.signal });
     if (!res.ok) {
-      // 404 means the proxy deployment has no functions (or the path is
-      // wrong) — treat any non-OK as "live data unavailable".
-      throw new Error(`RAWG proxy error ${res.status}`);
+      // 404 is meaningful ("no such game"); 5xx/network issues mean the
+      // live backend is unavailable and the catalog facade will fall back
+      // to saved picks. The status rides on the error so callers can tell
+      // the two apart without ever seeing the raw response.
+      const err = new Error(`RAWG proxy error ${res.status}`);
+      err.status = res.status;
+      throw err;
     }
     const data = await res.json();
     cacheSet(key, data);
@@ -177,12 +181,20 @@ async function rawgSearch(query, pageSize = 8) {
  * @throws on network/proxy failure.
  */
 async function rawgGetGame(rawgId) {
-  const [details, screenshotsRes, storesRes] = await Promise.all([
-    rawgFetch(`games/${rawgId}`),
+  let details;
+  try {
+    details = await rawgFetch(`games/${rawgId}`);
+  } catch (err) {
+    // 404 from the proxy means RAWG genuinely has no such game — report
+    // "not found" rather than pretending the backend is down.
+    if (err && err.status === 404) return null;
+    throw err;
+  }
+  if (!details) return null;
+  const [screenshotsRes, storesRes] = await Promise.all([
     rawgFetch(`games/${rawgId}/screenshots`).catch(() => null),
     rawgFetch(`games/${rawgId}/stores`).catch(() => null)
   ]);
-  if (!details || details.detail) return null; // RAWG returns {detail:"Not found."} on 404
   const screenshots = (screenshotsRes && screenshotsRes.results) || [];
   const stores = (storesRes && storesRes.results) || [];
   return normalizeRawgDetail(details, screenshots, stores);

@@ -41,8 +41,18 @@ the whole page.
 | `--border-strong` | `rgba(255,255,255,.16)` | `rgba(15,23,42,.20)` | Emphasis borders |
 
 - **Depth comes from surfaces + hairline borders, not big shadows.**
-- Payment cards may use their own official brand colors (M-Pesa red, Airtel
-  red, NMB gold) on their own cards only.
+- Payment cards are **full-surface brand cards**: the card background is the
+  exact dominant background color sampled from the logo file, and the logo
+  sits on the card with no box, border, or radius — logo and card are one
+  continuous surface. Sampled values (PIL, from the logo files in
+  `assets/`):
+  - Vodacom M-Pesa: card `#E90004` (red), white text; white "Pay Now" with
+    red text; logo = white symbol on that same red.
+  - Airtel Money: card `#FFFFFF` (white), dark text; red "Pay Now" `#E20010`
+    (the logo's own text red); logo = red mark on white.
+  - NMB Bank: card `#2056AE` (blue), white text; white "Pay Now" with blue
+    text; logo = white wordmark on that same blue.
+  Brand colors never leave their own card.
 - Feedback: `--success #3fb950`, `--danger #f0554c`, info = accent-soft.
 
 ## 3. Typography Rules

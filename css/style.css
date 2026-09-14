@@ -48,13 +48,16 @@
   --danger-soft: rgba(240, 85, 76, 0.12);
   --info-soft: rgba(47, 155, 240, 0.12);
 
-  /* Payment brands (only on their own cards) */
-  --brand-mpesa: #e60000;
-  --brand-mpesa-soft: rgba(230, 0, 0, 0.12);
-  --brand-airtel: #e4002b;
-  --brand-airtel-soft: rgba(228, 0, 43, 0.12);
-  --brand-bank: #c9a24b;
-  --brand-bank-soft: rgba(201, 162, 75, 0.12);
+  /* Payment brands (only on their own cards).
+     Each value is the EXACT dominant background color sampled from the
+     logo file it sits on — so logo and card share one seamless surface:
+       vodacom_logo.jpg → #E90004 (red field of the logo)
+       airtel_logo.jpg  → #FFFFFF (white field; logo text is #E20010 red)
+       nmb_logo.jpg     → #2056AE (blue field of the logo) */
+  --brand-mpesa: #e90004;
+  --brand-airtel: #e20010;
+  --brand-airtel-card: #ffffff;
+  --brand-bank: #2056ae;
 
   /* Shape */
   --radius-sm: 10px;
@@ -306,10 +309,11 @@ select:focus-visible, [tabindex]:focus-visible {
 .hero-media { position: absolute; inset: 0; z-index: 0; }
 .hero-video, .hero-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .hero-poster { display: none; }
+/* Text scrim only — deliberately light so the video stays the star. */
 .hero-overlay {
   position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(90deg, rgba(10,11,13,0.85) 0%, rgba(10,11,13,0.52) 44%, rgba(10,11,13,0.16) 78%, rgba(10,11,13,0.06) 100%),
-              linear-gradient(0deg, rgba(10,11,13,0.55) 0%, rgba(10,11,13,0) 34%);
+  background: linear-gradient(90deg, rgba(10,11,13,0.78) 0%, rgba(10,11,13,0.42) 42%, rgba(10,11,13,0.1) 72%, rgba(10,11,13,0) 100%),
+              linear-gradient(0deg, rgba(10,11,13,0.5) 0%, rgba(10,11,13,0) 30%);
 }
 .hero-grid { position: relative; z-index: 2; padding: 64px 0; }
 .hero-grid > div { max-width: 560px; }
@@ -574,29 +578,73 @@ select:focus-visible, [tabindex]:focus-visible {
   background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);
   padding: 0; overflow: hidden; box-shadow: var(--shadow-soft);
 }
-.support-card-header {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  padding: 18px 20px; border-bottom: 1px solid var(--border-subtle);
+/* Brand cards are FULL-SURFACE: the card background is the logo's own
+   background color (sampled from the logo file), and the logo sits on the
+   card with no box, border or radius — one continuous surface. */
+.support-card.mpesa { background: var(--brand-mpesa); border-color: transparent; }
+.support-card.airtel { background: var(--brand-airtel-card); border-color: var(--border-strong); }
+.support-card.bank { background: var(--brand-bank); border-color: transparent; }
+
+.support-card-header { position: relative; display: block; }
+.support-card-body { padding: 20px 20px 22px; }
+
+/* Logo band: the image is centered on a transparent strip; the card's
+   brand color fills the letterbox, so the logo edges melt into the card. */
+.brand-logo { display: block; width: 100%; height: 78px; border: none; border-radius: 0; background: transparent; flex-shrink: 0; }
+.brand-logo img { width: 100%; height: 100%; object-fit: contain; object-position: left center; display: block; }
+
+.support-tag {
+  position: absolute; top: 12px; right: 12px;
+  font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em;
+  padding: 4px 10px; border-radius: var(--radius-pill);
+  background: rgba(15, 23, 42, 0.07); color: #1a1d22; border: 1px solid rgba(15, 23, 42, 0.18);
 }
-.support-card-body { padding: 20px; }
+.support-card.mpesa .support-tag, .support-card.bank .support-tag {
+  background: rgba(255, 255, 255, 0.16); color: #fff; border-color: rgba(255, 255, 255, 0.35);
+}
 
-.brand-logo { width: 48px; height: 48px; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border-subtle); background: var(--bg-surface-elevated); flex-shrink: 0; }
-.brand-logo img { width: 100%; height: 100%; object-fit: cover; }
-
-.support-card.mpesa { border-top: 3px solid var(--brand-mpesa); }
-.support-card.mpesa .support-card-header { background: var(--brand-mpesa-soft); }
-.support-card.airtel { border-top: 3px solid var(--brand-airtel); }
-.support-card.airtel .support-card-header { background: var(--brand-airtel-soft); }
-.support-card.bank { border-top: 3px solid var(--brand-bank); }
-.support-card.bank .support-card-header { background: var(--brand-bank-soft); }
-
-.support-tag { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; padding: 4px 10px; border-radius: var(--radius-pill); background: var(--glass-bg-light); color: var(--text-secondary); border: 1px solid var(--border-subtle); }
+/* Card text scales with the surface (colored cards → white, white card → dark) */
 .support-card h3 { font-size: 15px; margin-bottom: 10px; }
-.support-card .support-number { font-family: var(--font-mono); font-size: 19px; font-weight: 700; color: var(--text-primary); margin-bottom: 10px; letter-spacing: 0.02em; }
-.support-card .muted { color: var(--text-secondary); font-size: 13px; margin: 0 0 16px; }
+.support-card .support-number { font-family: var(--font-mono); font-size: 19px; font-weight: 700; margin-bottom: 10px; letter-spacing: 0.02em; }
+.support-card .muted { font-size: 13px; margin: 0 0 16px; }
 .support-card .support-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .support-card .support-actions .btn { flex: 1; min-width: 130px; }
-.support-card .ussd-hint { font-size: 12px; color: var(--text-muted); margin-top: 12px; line-height: 1.5; }
+.support-card .ussd-hint { font-size: 12px; margin-top: 12px; line-height: 1.5; }
+
+.support-card.mpesa h3, .support-card.bank h3,
+.support-card.mpesa .support-number, .support-card.bank .support-number { color: #fff; }
+.support-card.mpesa .muted, .support-card.bank .muted { color: rgba(255, 255, 255, 0.88); }
+.support-card.mpesa .ussd-hint, .support-card.bank .ussd-hint { color: rgba(255, 255, 255, 0.72); }
+
+.support-card.airtel h3, .support-card.airtel .support-number { color: #1a1d22; }
+.support-card.airtel .muted { color: #4c5462; }
+.support-card.airtel .ussd-hint { color: #6b7280; }
+
+/* Copy button: outline that suits its surface */
+.support-card.mpesa .support-actions .btn-ghost,
+.support-card.bank .support-actions .btn-ghost {
+  background: transparent; border-color: rgba(255, 255, 255, 0.55); color: #fff;
+}
+.support-card.mpesa .support-actions .btn-ghost:hover,
+.support-card.bank .support-actions .btn-ghost:hover { background: rgba(255, 255, 255, 0.14); border-color: #fff; }
+.support-card.airtel .support-actions .btn-ghost {
+  background: #fff; border-color: rgba(15, 23, 42, 0.28); color: #1a1d22;
+}
+.support-card.airtel .support-actions .btn-ghost:hover { background: #f2f4f8; border-color: rgba(15, 23, 42, 0.45); }
+
+/* Pay Now — per the brand spec:
+   Vodacom: white button, red text · Airtel: red button, white text ·
+   NMB: white button, blue text */
+.support-card.mpesa .btn-primary { background: #fff; color: var(--brand-mpesa); border-color: #fff; box-shadow: none; }
+.support-card.mpesa .btn-primary:hover { background: #ffecec; color: var(--brand-mpesa); border-color: #fff; }
+.support-card.airtel .btn-primary { background: var(--brand-airtel); color: #fff; border-color: var(--brand-airtel); box-shadow: none; }
+.support-card.airtel .btn-primary:hover { background: #c0000d; border-color: #c0000d; }
+.support-card.bank .btn-primary { background: #fff; color: var(--brand-bank); border-color: #fff; box-shadow: none; }
+.support-card.bank .btn-primary:hover { background: #eaf1fd; color: var(--brand-bank); border-color: #fff; }
+
+/* Focus rings that stay visible on the brand surfaces */
+.support-card.mpesa :focus-visible, .support-card.bank :focus-visible { outline-color: #fff; }
+.support-card.airtel :focus-visible { outline-color: var(--brand-airtel); }
 
 .support-help { background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 28px; }
 .support-help h2 { font-size: 19px; margin-bottom: 16px; }
@@ -664,6 +712,7 @@ select:focus-visible, [tabindex]:focus-visible {
   .support-grid { grid-template-columns: 1fr; }
   .support-card .support-actions { flex-direction: column; }
   .support-card .support-actions .btn { width: 100%; }
+  .brand-logo { height: 64px; }
 
   /* Touch targets on small screens */
   .icon-btn { width: 44px; height: 44px; }

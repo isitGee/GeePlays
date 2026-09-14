@@ -86,13 +86,15 @@
   <section class="hero">
     <div class="hero-media" aria-hidden="true">
       <img class="hero-poster" src="./assets/hero-poster.jpg" alt="">
+      <!-- 1.9 MB, 720p H.264 +faststart: first frame streams in fast,
+           poster (same 720p frame) shows instantly while it buffers. -->
       <video
         class="hero-video"
         autoplay
         muted
         loop
         playsinline
-        preload="metadata"
+        preload="auto"
         poster="./assets/hero-poster.jpg">
         <source src="./assets/hero.mp4" type="video/mp4">
       </video>
@@ -102,7 +104,7 @@
       <div>
         <span class="eyebrow">Discover. Explore. Play.</span>
         <h1 class="hero-title">Find your next <span class="grad">obsession.</span></h1>
-        <p class="hero-copy">Discover what to play next — browse games, check system requirements, flip through screenshots, and watch real gameplay, then head straight to the official store to get it.</p>
+        <p class="hero-copy">Your next favorite game is hiding in this catalog. Browse by genre, check specs before you buy, flip through screenshots, and watch real gameplay — then jump straight to the official store and play.</p>
         <div class="hero-actions">
           <a href="./games.html" class="btn btn-primary">Explore Games</a>
           <a href="./games.html#genres" class="btn btn-ghost">Browse Categories</a>

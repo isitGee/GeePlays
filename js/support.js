@@ -17,12 +17,14 @@
      copy button + on-screen number are the real fallback there.
    ========================================================= */
 
-// Verified against vodacom.co.tz and airtel.co.tz (see the change summary
-// for sources). Never invent or guess a USSD code — leave blank and fall
-// back to copy-only if a provider isn't listed here.
+// Verified against the providers' own sites (vodacom.co.tz, airtel.co.tz,
+// nmbbank.co.tz — "NMB Mkononi … dialling *150*66#" and NMB's official
+// NMB-mobile FAQ PDFs). Never invent or guess a USSD code — leave blank
+// and fall back to copy-only if a provider isn't listed here.
 const USSD_CODES = {
   vodacom: { code: "*150*00#", menuHint: "Choose Send Money, then enter this number:" },
-  airtel: { code: "*150*60#", menuHint: "Choose Send Money, then enter this number:" }
+  airtel: { code: "*150*60#", menuHint: "Choose Send Money, then enter this number:" },
+  nmb: { code: "*150*66#", menuHint: "Enter your PIN, choose Send Money → To another NMB account, then enter this account number:" }
 };
 
 async function loadSupportData() {
@@ -57,8 +59,9 @@ function makeCopyBtn(text, label = "Copy Number") {
 
 function telHref(ussdCode) {
   // '#' must be percent-encoded in a tel: URL or the browser treats it
-  // as a URL fragment and drops it.
-  return `tel:${ussdCode.replace(/#/g, "%23")}`;
+  // as a URL fragment and drops it; '*' is encoded too so the full
+  // USSD string survives every browser's URL parsing.
+  return `tel:${ussdCode.replace(/\*/g, "%2A").replace(/#/g, "%23")}`;
 }
 
 function makePayNowLink(ussdKey) {
@@ -98,8 +101,8 @@ function getBrandInfo(provider) {
       cardClass: "bank",
       logoClass: "nmb",
       logoSrc: "./assets/nmb_logo.jpg",
-      logoAlt: "Bank logo",
-      ussdKey: null
+      logoAlt: "NMB Bank logo",
+      ussdKey: "nmb"
     };
   }
   return { cardClass: "", logoClass: "", logoSrc: "", logoAlt: provider, ussdKey: null };

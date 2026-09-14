@@ -201,6 +201,7 @@ function initTheme() {
     root.setAttribute("data-theme", theme);
     try { localStorage.setItem("geeplays-theme", theme); } catch (e) { /* private mode */ }
     updateLabel(theme);
+    updateThemeColor(theme);
   }
 
   function updateLabel(theme) {
@@ -210,8 +211,21 @@ function initTheme() {
     toggle.title = `Switch to ${next} theme`;
   }
 
+  // Match the mobile browser chrome to the active theme.
+  function updateThemeColor(theme) {
+    let meta = document.querySelector('meta[name="theme-color"]');
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.name = "theme-color";
+      document.head.appendChild(meta);
+    }
+    meta.content = theme === "light" ? "#eef1f6" : "#0f1115";
+  }
+
   // The inline <head> script already set the initial theme.
-  updateLabel(root.getAttribute("data-theme") || "dark");
+  const initial = root.getAttribute("data-theme") || "dark";
+  updateLabel(initial);
+  updateThemeColor(initial);
 
   toggle.addEventListener("click", () => {
     const current = root.getAttribute("data-theme") === "light" ? "light" : "dark";
