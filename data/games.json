@@ -3,8 +3,8 @@
     "id": "stardew-valley",
     "title": "Stardew Valley",
     "slug": "stardew-valley",
-    "cover": "assets/images/games/stardew-valley.jpg",
-    "banner": "assets/images/banners/stardew-valley.jpg",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/413150/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/413150/header.jpg",
     "shortDescription": "Inherit a run-down farm and build a new life in Pelican Town.",
     "description": "A cozy life sim where you trade the daily grind for a plot of overgrown land, a handful of tools, and total freedom. Plant crops, raise animals, fish the coast, dig through the mines, and get to know the townsfolk one season at a time. Play solo at your own pace or bring friends along for co-op farming.",
     "genre": ["Simulation", "RPG", "Indie"],
@@ -29,12 +29,7 @@
         "storage": "1 GB available space"
       }
     },
-    "screenshots": [
-      "assets/images/screenshots/stardew-valley-1.jpg",
-      "assets/images/screenshots/stardew-valley-2.jpg",
-      "assets/images/screenshots/stardew-valley-3.jpg",
-      "assets/images/screenshots/stardew-valley-4.jpg"
-    ],
+    "screenshots": [],
     "youtube": "https://www.youtube.com/watch?v=ot7uXNQskhs",
     "download": {
       "label": "Get Game",
@@ -46,8 +41,8 @@
     "id": "hades",
     "title": "Hades",
     "slug": "hades",
-    "cover": "assets/images/games/hades.jpg",
-    "banner": "assets/images/banners/hades.jpg",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1145360/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/1145360/header.jpg",
     "shortDescription": "Battle out of the underworld in a god-like rogue-like dungeon crawler.",
     "description": "As Zagreus, son of Hades, fight your way out of the Underworld using the powers and blessings of the Olympians. Every escape attempt reshapes the layout, the enemies, and your build, while a cast of Greek gods and monsters keeps the story moving between runs. Fast, stylish combat meets a narrative that actually remembers what you've done.",
     "genre": ["Action", "Roguelike", "Indie"],
@@ -72,12 +67,7 @@
         "storage": "10 GB available space"
       }
     },
-    "screenshots": [
-      "assets/images/screenshots/hades-1.jpg",
-      "assets/images/screenshots/hades-2.jpg",
-      "assets/images/screenshots/hades-3.jpg",
-      "assets/images/screenshots/hades-4.jpg"
-    ],
+    "screenshots": [],
     "youtube": "https://www.youtube.com/watch?v=Bz8l935Bv0Y",
     "download": {
       "label": "Get Game",
@@ -89,15 +79,15 @@
     "id": "portal-2",
     "title": "Portal 2",
     "slug": "portal-2",
-    "cover": "assets/images/games/portal-2.jpg",
-    "banner": "assets/images/banners/portal-2.jpg",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/620/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/620/header.jpg",
     "shortDescription": "Bend space with the Aperture Science Handheld Portal Device.",
     "description": "The sequel to one of gaming's sharpest puzzle experiments expands the formula with new mechanics, a much longer campaign, and a genuinely funny script courtesy of GLaDOS and friends. Solo players untangle Aperture Science's test chambers one portal at a time, while the separate co-op campaign is built entirely around two players thinking together.",
     "genre": ["Puzzle", "Action", "Adventure"],
     "developer": "Valve",
     "publisher": "Valve",
     "releaseDate": "2011-04-19",
-    "platforms": ["Windows", "macOS", "Linux", "PlayStation 3", "Xbox 360"],
+    "platforms": ["Windows", "macOS", "Linux", "PlayStation", "Xbox"],
     "rating": 9.5,
     "requirements": {
       "minimum": {
@@ -115,12 +105,7 @@
         "storage": "8 GB available space"
       }
     },
-    "screenshots": [
-      "assets/images/screenshots/portal-2-1.jpg",
-      "assets/images/screenshots/portal-2-2.jpg",
-      "assets/images/screenshots/portal-2-3.jpg",
-      "assets/images/screenshots/portal-2-4.jpg"
-    ],
+    "screenshots": [],
     "youtube": "https://www.youtube.com/watch?v=8_Ki0Gfczfo",
     "download": {
       "label": "Get Game",
@@ -132,8 +117,8 @@
     "id": "hollow-knight",
     "title": "Hollow Knight",
     "slug": "hollow-knight",
-    "cover": "assets/images/games/hollow-knight.jpg",
-    "banner": "assets/images/banners/hollow-knight.jpg",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/367520/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/367520/header.jpg",
     "shortDescription": "Explore a vast, hand-drawn kingdom of insects and heroes.",
     "description": "Descend into Hallownest, a sprawling, decaying kingdom beneath the surface, packed with secret passages, ancient enemies, and hard-won upgrades. Hollow Knight rewards careful exploration and sharp reflexes in equal measure, with a moody hand-drawn art style and a score that quietly sells every corner of its world.",
     "genre": ["Action", "Adventure", "Indie"],
@@ -158,12 +143,7 @@
         "storage": "9 GB available space"
       }
     },
-    "screenshots": [
-      "assets/images/screenshots/hollow-knight-1.jpg",
-      "assets/images/screenshots/hollow-knight-2.jpg",
-      "assets/images/screenshots/hollow-knight-3.jpg",
-      "assets/images/screenshots/hollow-knight-4.jpg"
-    ],
+    "screenshots": [],
     "youtube": "https://www.youtube.com/watch?v=UAO2urG23S4",
     "download": {
       "label": "Get Game",
@@ -175,8 +155,8 @@
     "id": "elden-ring",
     "title": "Elden Ring",
     "slug": "elden-ring",
-    "cover": "assets/images/games/elden-ring.jpg",
-    "banner": "assets/images/banners/elden-ring.jpg",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg",
     "shortDescription": "Rise, Tarnished, and carve your own path across the Lands Between.",
     "description": "FromSoftware's open-world take on its trademark punishing action-RPG formula, built around a world designed with George R. R. Martin. Ride, dodge, and cast your way across the Lands Between, chasing shards of the shattered Elden Ring while every boss, dungeon, and legacy area asks you to earn your progress the hard way.",
     "genre": ["Action RPG", "Open World"],
@@ -201,12 +181,7 @@
         "storage": "60 GB SSD space"
       }
     },
-    "screenshots": [
-      "assets/images/screenshots/elden-ring-1.jpg",
-      "assets/images/screenshots/elden-ring-2.jpg",
-      "assets/images/screenshots/elden-ring-3.jpg",
-      "assets/images/screenshots/elden-ring-4.jpg"
-    ],
+    "screenshots": [],
     "youtube": "https://www.youtube.com/watch?v=AKXiKBnzpBQ",
     "download": {
       "label": "Get Game",
@@ -218,8 +193,8 @@
     "id": "stray",
     "title": "Stray",
     "slug": "stray",
-    "cover": "assets/images/games/stray.jpg",
-    "banner": "assets/images/banners/stray.jpg",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1332010/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/1332010/header.jpg",
     "shortDescription": "Roam a neon-lit robot city as a lost cat trying to find its way home.",
     "description": "Separated from its family, a stray cat falls into a walled-off cybercity populated entirely by droids. With a small drone companion in tow, you'll leap across rooftops, dodge dangerous creatures, and slowly piece together why the city's residents never see the sky. It's a short, atmospheric adventure told almost entirely through a cat's-eye view.",
     "genre": ["Adventure", "Puzzle"],
@@ -244,12 +219,7 @@
         "storage": "10 GB SSD space"
       }
     },
-    "screenshots": [
-      "assets/images/screenshots/stray-1.jpg",
-      "assets/images/screenshots/stray-2.jpg",
-      "assets/images/screenshots/stray-3.jpg",
-      "assets/images/screenshots/stray-4.jpg"
-    ],
+    "screenshots": [],
     "youtube": "https://www.youtube.com/watch?v=4uP2MyUL49s",
     "download": {
       "label": "Get Game",
@@ -261,8 +231,8 @@
     "id": "it-takes-two",
     "title": "It Takes Two",
     "slug": "it-takes-two",
-    "cover": "assets/images/games/it-takes-two.jpg",
-    "banner": "assets/images/banners/it-takes-two.jpg",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1426210/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/1426210/header.jpg",
     "shortDescription": "A split-screen co-op adventure built for exactly two players.",
     "description": "Cody and May are on the verge of divorce when they're magically turned into dolls and forced to work together to turn themselves back. It Takes Two reinvents its core gameplay in nearly every chapter, hopping between platforming, physics puzzles, and mini-games that only work because two people are playing at once.",
     "genre": ["Adventure", "Action", "Co-op"],
@@ -287,12 +257,7 @@
         "storage": "50 GB available space"
       }
     },
-    "screenshots": [
-      "assets/images/screenshots/it-takes-two-1.jpg",
-      "assets/images/screenshots/it-takes-two-2.jpg",
-      "assets/images/screenshots/it-takes-two-3.jpg",
-      "assets/images/screenshots/it-takes-two-4.jpg"
-    ],
+    "screenshots": [],
     "youtube": "https://www.youtube.com/watch?v=jc-tYY3BSBQ",
     "download": {
       "label": "Get Game",
@@ -304,8 +269,8 @@
     "id": "cyberpunk-2077",
     "title": "Cyberpunk 2077",
     "slug": "cyberpunk-2077",
-    "cover": "assets/images/games/cyberpunk-2077.jpg",
-    "banner": "assets/images/banners/cyberpunk-2077.jpg",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg",
     "shortDescription": "Become a mercenary outlaw in the sprawl of Night City.",
     "description": "An open-world action-RPG set in Night City, a megalopolis obsessed with power, glamour, and body modification. Play as V, a mercenary chasing a one-of-a-kind implant that holds the key to immortality, while every choice in dialogue, builds, and jobs shapes how the story plays out.",
     "genre": ["Action RPG", "Open World"],
@@ -330,12 +295,7 @@
         "storage": "70 GB SSD space"
       }
     },
-    "screenshots": [
-      "assets/images/screenshots/cyberpunk-2077-1.jpg",
-      "assets/images/screenshots/cyberpunk-2077-2.jpg",
-      "assets/images/screenshots/cyberpunk-2077-3.jpg",
-      "assets/images/screenshots/cyberpunk-2077-4.jpg"
-    ],
+    "screenshots": [],
     "youtube": "https://www.youtube.com/watch?v=UnA7tepsc7s",
     "download": {
       "label": "Get Game",
@@ -347,8 +307,8 @@
     "id": "rocket-league",
     "title": "Rocket League",
     "slug": "rocket-league",
-    "cover": "assets/images/games/rocket-league.jpg",
-    "banner": "assets/images/banners/rocket-league.jpg",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/252950/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/252950/header.jpg",
     "shortDescription": "Vehicular soccer at high speed, free to play.",
     "description": "Rocket-powered cars, a giant ball, and a stadium built for chaos. Rocket League mixes the basics of soccer with aerial car control, boost management, and a whole lot of trick shots, across quick casual matches or ranked competitive play. Free to play, with cross-platform matches against everyone else online.",
     "genre": ["Sports", "Racing"],
@@ -373,16 +333,11 @@
         "storage": "20 GB available space"
       }
     },
-    "screenshots": [
-      "assets/images/screenshots/rocket-league-1.jpg",
-      "assets/images/screenshots/rocket-league-2.jpg",
-      "assets/images/screenshots/rocket-league-3.jpg",
-      "assets/images/screenshots/rocket-league-4.jpg"
-    ],
+    "screenshots": [],
     "youtube": "https://www.youtube.com/watch?v=_sL-2QCbfaw",
     "download": {
       "label": "Get Game",
-      "url": "https://store.epicgames.com/en-US/p/rocket-league"
+      "url": "https://store.steampowered.com/app/252950/Rocket_League/"
     },
     "tags": ["Sports", "Multiplayer", "Competitive", "Free to Play", "Cars"]
   },
@@ -390,8 +345,8 @@
     "id": "phasmophobia",
     "title": "Phasmophobia",
     "slug": "phasmophobia",
-    "cover": "assets/images/games/phasmophobia.jpg",
-    "banner": "assets/images/banners/phasmophobia.jpg",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/739630/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/739630/header.jpg",
     "shortDescription": "Grab your gear and hunt ghosts with up to three friends.",
     "description": "A 4-player online co-op horror game where paranormal investigators walk into haunted locations with EMF readers, spirit boxes, and thermometers, trying to identify the ghost before it identifies you. Every contract is different, every ghost behaves differently, and every jump scare is worse with friends on voice chat.",
     "genre": ["Horror", "Multiplayer"],
@@ -416,12 +371,7 @@
         "storage": "20 GB available space"
       }
     },
-    "screenshots": [
-      "assets/images/screenshots/phasmophobia-1.jpg",
-      "assets/images/screenshots/phasmophobia-2.jpg",
-      "assets/images/screenshots/phasmophobia-3.jpg",
-      "assets/images/screenshots/phasmophobia-4.jpg"
-    ],
+    "screenshots": [],
     "youtube": "https://www.youtube.com/watch?v=sRa9oeo5KiY",
     "download": {
       "label": "Get Game",
@@ -433,8 +383,8 @@
     "id": "forza-horizon-5",
     "title": "Forza Horizon 5",
     "slug": "forza-horizon-5",
-    "cover": "assets/images/games/forza-horizon-5.jpg",
-    "banner": "assets/images/banners/forza-horizon-5.jpg",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/header.jpg",
     "shortDescription": "Race across the living, breathing landscapes of Mexico.",
     "description": "An open-world racer set across deserts, jungles, canyons, and a snow-capped volcano, with weather and seasons that change the way every road drives. Collect and customize hundreds of cars, chase down Horizon Story missions, or just go exploring off the beaten path with friends online.",
     "genre": ["Racing", "Sports"],
@@ -459,12 +409,7 @@
         "storage": "110 GB SSD space"
       }
     },
-    "screenshots": [
-      "assets/images/screenshots/forza-horizon-5-1.jpg",
-      "assets/images/screenshots/forza-horizon-5-2.jpg",
-      "assets/images/screenshots/forza-horizon-5-3.jpg",
-      "assets/images/screenshots/forza-horizon-5-4.jpg"
-    ],
+    "screenshots": [],
     "youtube": "https://www.youtube.com/watch?v=Rv7xLt5yNsM",
     "download": {
       "label": "Get Game",
@@ -476,8 +421,8 @@
     "id": "civilization-vi",
     "title": "Sid Meier's Civilization VI",
     "slug": "civilization-vi",
-    "cover": "assets/images/games/civilization-vi.jpg",
-    "banner": "assets/images/banners/civilization-vi.jpg",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/289070/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/289070/header.jpg",
     "shortDescription": "Build an empire that stands the test of time.",
     "description": "A turn-based strategy game where you guide a civilization from a single tribal settlement to a global superpower. Manage districts, research, culture, and diplomacy across thousands of years of history, and win through military conquest, science, culture, religion, or diplomacy — whichever path fits your empire best.",
     "genre": ["Strategy"],
@@ -502,17 +447,242 @@
         "storage": "12 GB available space"
       }
     },
-    "screenshots": [
-      "assets/images/screenshots/civilization-vi-1.jpg",
-      "assets/images/screenshots/civilization-vi-2.jpg",
-      "assets/images/screenshots/civilization-vi-3.jpg",
-      "assets/images/screenshots/civilization-vi-4.jpg"
-    ],
+    "screenshots": [],
     "youtube": "https://www.youtube.com/watch?v=qvBf6WBatk0",
     "download": {
       "label": "Get Game",
       "url": "https://store.steampowered.com/app/289070/Sid_Meiers_Civilization_VI/"
     },
     "tags": ["Strategy", "Turn-Based", "Historical", "Multiplayer", "4X"]
+  },
+  {
+    "id": "the-witcher-3",
+    "title": "The Witcher 3: Wild Hunt",
+    "slug": "the-witcher-3",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/292030/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg",
+    "shortDescription": "Hunt monsters and follow a war-torn fantasy epic as Geralt of Rivia.",
+    "description": "Step into the boots of Geralt of Rivia, a monster hunter searching for his adopted daughter across a sprawling open world torn apart by war. Every choice ripples through the story, and the Hearts of Stone and Blood and Wine expansions add dozens more hours.",
+    "genre": ["Action RPG", "Open World"],
+    "developer": "CD Projekt Red",
+    "publisher": "CD Projekt",
+    "releaseDate": "2015-05-19",
+    "platforms": ["Windows", "PlayStation", "Xbox", "Nintendo Switch"],
+    "rating": 9.6,
+    "requirements": {},
+    "screenshots": [],
+    "youtube": "https://www.youtube.com/watch?v=c0i88t0Kacs",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/292030/The_Witcher_3_Wild_Hunt/"
+    },
+    "tags": ["Open World", "Story Rich", "Fantasy", "RPG", "Singleplayer"]
+  },
+  {
+    "id": "red-dead-redemption-2",
+    "title": "Red Dead Redemption 2",
+    "slug": "red-dead-redemption-2",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/header.jpg",
+    "shortDescription": "Outlaw life across a vast, beautiful, unforgiving frontier.",
+    "description": "The story of Arthur Morgan and the Van der Linde gang as they flee across the dying days of the American frontier. A staggeringly detailed open world, a slow-burning story, and an online mode built on the same map.",
+    "genre": ["Action", "Adventure", "Open World"],
+    "developer": "Rockstar Games",
+    "publisher": "Rockstar Games",
+    "releaseDate": "2019-12-05",
+    "platforms": ["Windows", "PlayStation", "Xbox"],
+    "rating": 9.5,
+    "requirements": {},
+    "screenshots": [],
+    "youtube": "https://www.youtube.com/watch?v=eaW0tYpxyp0",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/1174180/Red_Dead_Redemption_2/"
+    },
+    "tags": ["Open World", "Story Rich", "Western", "Atmospheric", "Singleplayer"]
+  },
+  {
+    "id": "gta-v",
+    "title": "Grand Theft Auto V",
+    "slug": "gta-v",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg",
+    "shortDescription": "Three criminals, one city, endless chaos across Los Santos.",
+    "description": "Three very different criminals plan a series of heists across Los Santos in one of the best-selling games ever made, with a single-player story that swaps between them and the ever-evolving online world of GTA Online.",
+    "genre": ["Action", "Adventure", "Open World"],
+    "developer": "Rockstar North",
+    "publisher": "Rockstar Games",
+    "releaseDate": "2015-04-14",
+    "platforms": ["Windows", "PlayStation", "Xbox"],
+    "rating": 9.2,
+    "requirements": {},
+    "screenshots": [],
+    "youtube": "https://www.youtube.com/watch?v=QkkoHAzjnUs",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/271590/Grand_Theft_Auto_V/"
+    },
+    "tags": ["Open World", "Multiplayer", "Crime", "Action", "Online"]
+  },
+  {
+    "id": "baldurs-gate-3",
+    "title": "Baldur's Gate 3",
+    "slug": "baldurs-gate-3",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1086940/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/1086940/header.jpg",
+    "shortDescription": "A Dungeons & Dragons epic where every choice rolls the dice.",
+    "description": "A sprawling RPG set in the Dungeons & Dragons universe, where dialogue, combat, and exploration all hinge on the roll of a die. Gather a party, build your character, and see how far your choices carry the story.",
+    "genre": ["RPG"],
+    "developer": "Larian Studios",
+    "publisher": "Larian Studios",
+    "releaseDate": "2023-08-03",
+    "platforms": ["Windows", "macOS", "PlayStation", "Xbox"],
+    "rating": 9.6,
+    "requirements": {},
+    "screenshots": [],
+    "youtube": "https://www.youtube.com/watch?v=XuCfkgaaa08",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/1086940/Baldurs_Gate_3/"
+    },
+    "tags": ["RPG", "Story Rich", "Turn-Based", "Fantasy", "Co-op"]
+  },
+  {
+    "id": "god-of-war",
+    "title": "God of War",
+    "slug": "god-of-war",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1593500/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/1593500/header.jpg",
+    "shortDescription": "Kratos and Atreus journey through Norse mythology, axe in hand.",
+    "description": "Years after the Greek saga, Kratos lives quietly in the Norse wilds with his son Atreus. Their journey to scatter his wife's ashes becomes a father-son epic of gods, monsters, and a single camera that never cuts away.",
+    "genre": ["Action", "Adventure"],
+    "developer": "Santa Monica Studio",
+    "publisher": "PlayStation PC LLC",
+    "releaseDate": "2022-01-14",
+    "platforms": ["Windows", "PlayStation"],
+    "rating": 9.4,
+    "requirements": {},
+    "screenshots": [],
+    "youtube": "https://www.youtube.com/watch?v=K0u_kAWLJOA",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/1593500/God_of_War/"
+    },
+    "tags": ["Action", "Story Rich", "Mythology", "Singleplayer", "Adventure"]
+  },
+  {
+    "id": "sekiro",
+    "title": "Sekiro: Shadows Die Twice",
+    "slug": "sekiro",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/814380/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/814380/header.jpg",
+    "shortDescription": "A shinobi's revenge, built on posture and precision.",
+    "description": "FromSoftware trades stamina bars for a razor-sharp parry system in this tale of a one-armed shinobi sworn to protect a young lord. Clash swords, break posture, and outlast a Sengoku-era Japan full of lethal encounters.",
+    "genre": ["Action"],
+    "developer": "FromSoftware",
+    "publisher": "Activision",
+    "releaseDate": "2019-03-22",
+    "platforms": ["Windows", "PlayStation", "Xbox"],
+    "rating": 9.0,
+    "requirements": {},
+    "screenshots": [],
+    "youtube": "https://www.youtube.com/watch?v=rXMX4YJ7Lks",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/814380/Sekiro_Shadows_Die_Twice/"
+    },
+    "tags": ["Souls-like", "Difficult", "Action", "Stealth", "Atmospheric"]
+  },
+  {
+    "id": "doom-eternal",
+    "title": "DOOM Eternal",
+    "slug": "doom-eternal",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/782330/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/782330/header.jpg",
+    "shortDescription": "Rip and tear through hell's armies at full speed.",
+    "description": "The Doom Slayer returns in a high-speed first-person shooter that turns every arena into a brutal ballet of gunfire, glory kills, and constant movement. Push forward to survive — there is no cover.",
+    "genre": ["Action", "Shooter"],
+    "developer": "id Software",
+    "publisher": "Bethesda Softworks",
+    "releaseDate": "2020-03-20",
+    "platforms": ["Windows", "PlayStation", "Xbox", "Nintendo Switch"],
+    "rating": 8.9,
+    "requirements": {},
+    "screenshots": [],
+    "youtube": "https://www.youtube.com/watch?v=CGq8Ee2gOe4",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/782330/DOOM_Eternal/"
+    },
+    "tags": ["Shooter", "Fast-Paced", "Singleplayer", "Multiplayer", "Sci-fi"]
+  },
+  {
+    "id": "resident-evil-4",
+    "title": "Resident Evil 4",
+    "slug": "resident-evil-4",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2050650/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/2050650/header.jpg",
+    "shortDescription": "The survival-horror classic, rebuilt for a new generation.",
+    "description": "Capcom's acclaimed remake of the 2005 classic sends Leon S. Kennedy to a remote Spanish village to rescue the president's daughter, trading the original's camp for a darker, more relentless brand of survival horror.",
+    "genre": ["Horror", "Action"],
+    "developer": "Capcom",
+    "publisher": "Capcom",
+    "releaseDate": "2023-03-24",
+    "platforms": ["Windows", "PlayStation", "Xbox"],
+    "rating": 9.2,
+    "requirements": {},
+    "screenshots": [],
+    "youtube": "https://www.youtube.com/watch?v=E69tKrfEQag",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/2050650/Resident_Evil_4/"
+    },
+    "tags": ["Horror", "Action", "Survival", "Singleplayer", "Remake"]
+  },
+  {
+    "id": "hades-ii",
+    "title": "Hades II",
+    "slug": "hades-ii",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1145350/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/1145350/header.jpg",
+    "shortDescription": "Return to the Underworld in Supergiant's mythic sequel.",
+    "description": "Supergiant's follow-up to Hades casts you as Melinoë, the Princess of the Underworld, in a roguelike that evolves the original's breakneck combat and die-and-try-again storytelling with new gods, new weapons, and new mysteries.",
+    "genre": ["Action", "Roguelike"],
+    "developer": "Supergiant Games",
+    "publisher": "Supergiant Games",
+    "releaseDate": "2024-05-06",
+    "platforms": ["Windows"],
+    "rating": 9.0,
+    "requirements": {},
+    "screenshots": [],
+    "youtube": "https://www.youtube.com/watch?v=kdhzGciHxR0",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/1145350/Hades_II/"
+    },
+    "tags": ["Roguelike", "Mythology", "Action", "Story Rich", "Singleplayer"]
+  },
+  {
+    "id": "counter-strike-2",
+    "title": "Counter-Strike 2",
+    "slug": "counter-strike-2",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/730/library_600x900.jpg",
+    "banner": "https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg",
+    "shortDescription": "The next era of the world's most-played tactical shooter.",
+    "description": "Valve's Source 2 rebuild of Counter-Strike brings refreshed maps, upgraded visuals, and a new generation of competitive matchmaking to the tactical shooter that defined a genre — still free to play.",
+    "genre": ["Action", "Multiplayer"],
+    "developer": "Valve",
+    "publisher": "Valve",
+    "releaseDate": "2023-09-27",
+    "platforms": ["Windows", "Linux"],
+    "rating": 8.7,
+    "requirements": {},
+    "screenshots": [],
+    "youtube": "https://www.youtube.com/watch?v=1X8FnDH0Be4",
+    "download": {
+      "label": "Get Game",
+      "url": "https://store.steampowered.com/app/730/Counter_Strike_2/"
+    },
+    "tags": ["Multiplayer", "Competitive", "Shooter", "Tactical", "Free to Play"]
   }
 ]

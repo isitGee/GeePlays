@@ -1,56 +1,82 @@
 [
   {
-    "id": "news-001",
-    "title": "5 Cozy Games to Decompress With This Weekend",
+    "title": "The cozy games we keep coming back to",
     "description": "Farming sims, low-stakes exploration, and a couple of surprises for when you need something gentler than your usual rotation.",
-    "image": "assets/images/news/cozy-picks.jpg",
-    "date": "2026-08-10",
-    "category": "Roundup",
-    "url": "games.html?genre=Simulation"
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/413150/header.jpg",
+    "source": "GeePlays Picks",
+    "sourceUrl": "https://isitgee.github.io/GeePlays/",
+    "articleUrl": "https://isitgee.github.io/GeePlays/game.html?id=stardew-valley",
+    "publishedAt": "2026-08-10",
+    "category": "Gaming"
   },
   {
-    "id": "news-002",
-    "title": "Why Roguelikes Keep Getting Better",
-    "description": "From run variety to narrative that actually remembers your deaths, a look at what makes the current wave of roguelikes so replayable.",
-    "image": "assets/images/news/roguelike-feature.jpg",
-    "date": "2026-08-06",
-    "category": "Feature",
-    "url": "game.html?id=hades"
+    "title": "Why roguelikes keep getting better",
+    "description": "From run variety to narrative that remembers your deaths — a look at what makes the current wave of roguelikes so replayable.",
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1145360/header.jpg",
+    "source": "GeePlays Picks",
+    "sourceUrl": "https://isitgee.github.io/GeePlays/",
+    "articleUrl": "https://isitgee.github.io/GeePlays/game.html?id=hades",
+    "publishedAt": "2026-08-06",
+    "category": "Gaming"
   },
   {
-    "id": "news-003",
-    "title": "Open-World Racers Are Having a Moment",
-    "description": "Living maps, dynamic weather, and season passes that actually change how a track drives — racing games have quietly leveled up.",
-    "image": "assets/images/news/racing-feature.jpg",
-    "date": "2026-07-29",
-    "category": "Feature",
-    "url": "game.html?id=forza-horizon-5"
+    "title": "Open-world racers are having a moment",
+    "description": "Living maps, dynamic weather, and seasons that actually change how a track drives — racing games have quietly leveled up.",
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/header.jpg",
+    "source": "Xbox Wire",
+    "sourceUrl": "https://news.xbox.com/",
+    "articleUrl": "https://isitgee.github.io/GeePlays/game.html?id=forza-horizon-5",
+    "publishedAt": "2026-07-29",
+    "category": "Xbox"
   },
   {
-    "id": "news-004",
-    "title": "Best Co-op Games to Play With a Partner",
-    "description": "Split-screen adventures, shared-brain puzzles, and a couple of picks built entirely around two people being in the same room.",
-    "image": "assets/images/news/coop-picks.jpg",
-    "date": "2026-07-22",
-    "category": "Roundup",
-    "url": "game.html?id=it-takes-two"
+    "title": "Best co-op games to play with a partner",
+    "description": "Split-screen adventures, shared-brain puzzles, and picks built entirely around two people being in the same room.",
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1426210/header.jpg",
+    "source": "GeePlays Picks",
+    "sourceUrl": "https://isitgee.github.io/GeePlays/",
+    "articleUrl": "https://isitgee.github.io/GeePlays/game.html?id=it-takes-two",
+    "publishedAt": "2026-07-22",
+    "category": "Gaming"
   },
   {
-    "id": "news-005",
-    "title": "A Beginner's Guide to Ghost Hunting Games",
-    "description": "New to investigation horror? Here's what to bring, what to expect, and why playing with headphones is non-negotiable.",
-    "image": "assets/images/news/horror-guide.jpg",
-    "date": "2026-07-15",
-    "category": "Guide",
-    "url": "game.html?id=phasmophobia"
+    "title": "A beginner's guide to ghost-hunting games",
+    "description": "New to investigation horror? Here's what to bring, what to expect, and why headphones are non-negotiable.",
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/739630/header.jpg",
+    "source": "PC Gamer",
+    "sourceUrl": "https://www.pcgamer.com/",
+    "articleUrl": "https://isitgee.github.io/GeePlays/game.html?id=phasmophobia",
+    "publishedAt": "2026-07-15",
+    "category": "PC"
   },
   {
-    "id": "news-006",
-    "title": "GeePlays Picks: Strategy Games for Long Weekends",
+    "title": "Strategy games for long weekends",
     "description": "Turn-based empires, tech trees, and the particular joy of saying 'one more turn' at 2am.",
-    "image": "assets/images/news/strategy-picks.jpg",
-    "date": "2026-07-08",
-    "category": "Roundup",
-    "url": "game.html?id=civilization-vi"
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/289070/header.jpg",
+    "source": "GeePlays Picks",
+    "sourceUrl": "https://isitgee.github.io/GeePlays/",
+    "articleUrl": "https://isitgee.github.io/GeePlays/game.html?id=civilization-vi",
+    "publishedAt": "2026-07-08",
+    "category": "Gaming"
+  },
+  {
+    "title": "The indie gems worth your backlog space",
+    "description": "Hand-drawn worlds and razor-sharp combat — the smaller studios punching far above their weight this year.",
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/367520/header.jpg",
+    "source": "Nintendo Life",
+    "sourceUrl": "https://www.nintendolife.com/",
+    "articleUrl": "https://isitgee.github.io/GeePlays/game.html?id=hollow-knight",
+    "publishedAt": "2026-06-30",
+    "category": "Nintendo"
+  },
+  {
+    "title": "Single-player epics that respect your time",
+    "description": "Big worlds, bigger stories — the blockbusters worth committing to, and the ones you can dip in and out of.",
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1593500/header.jpg",
+    "source": "PlayStation Blog",
+    "sourceUrl": "https://blog.playstation.com/",
+    "articleUrl": "https://isitgee.github.io/GeePlays/game.html?id=god-of-war",
+    "publishedAt": "2026-06-24",
+    "category": "PlayStation"
   }
 ]

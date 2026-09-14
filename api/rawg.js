@@ -6,6 +6,9 @@
 // directly. This tiny function sits in between, holds the secret API key
 // server-side, and adds the header the browser needs.
 //
+// IMPORTANT: this file must live at the ROOT of the Vercel project as
+// /api/rawg.js so Vercel deploys it as a serverless function at /api/rawg.
+//
 // Set RAWG_API_KEY as an Environment Variable in the Vercel project
 // dashboard — never put the real key in this file.
 //

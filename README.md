@@ -1,5 +1,51 @@
 # Building GeePlays: What I Learned Getting a Static Site to Talk to a Live Game Database
- 
+
+## Current status: resilient by design
+
+GeePlays now has a **two-layer data architecture** so it never dies when a
+third-party API fails:
+
+1. **Primary source — RAWG** (live), fetched through a tiny serverless proxy
+   (`/api/rawg.js`) that holds the secret key and adds CORS headers.
+2. **Fallback — saved picks**, a hand-curated static catalog
+   (`data/games.json`, 22 games with official Steam artwork) plus saved news
+   stories (`data/news.json`) that ship with the site.
+3. **Graceful failure** — if the proxy is unreachable, the same pages render
+   the saved picks and show a small, honest notice ("Live game data is
+   temporarily unavailable — showing saved picks instead"). Search, filters,
+   and details all keep working offline. Nothing ever shows a raw error or a
+   blank section to a normal visitor.
+
+### What was actually broken (and the fix)
+
+When I checked the deployed proxy at
+`geeplays-rawg-proxy-isitgee.vercel.app/api/rawg`, it returned Vercel's
+`404 NOT_FOUND` — and the root of that domain now serves *this static site*.
+The proxy functions had been written into a subfolder
+(`geeplays-proxy-with-news/api/`) instead of the project-root `api/`, so when
+the repo was deployed to Vercel the functions were never picked up. RAWG
+itself was fine; the frontend just had no live backend to talk to.
+
+The fix has two parts:
+
+- **Proxy corrected** — the functions now live at the repo root in `api/`
+  (`api/rawg.js`, `api/news.js`) with the `rss-parser` dependency at the root
+  `package.json`, which is exactly where Vercel looks for them.
+- **Frontend hardened** — a new catalog facade (`js/catalog.js`) tries live
+  data first and falls back to the local dataset automatically, so the site
+  works today even while the proxy is not yet redeployed.
+
+### To reconnect live RAWG data
+
+1. Redeploy this repo to the **same Vercel project** (root = repo root).
+2. Add the `RAWG_API_KEY` environment variable in the Vercel dashboard.
+3. Confirm `https://<your-project>.vercel.app/api/rawg?path=games&page_size=1`
+   returns JSON. If you rename the project, update the two URLs in
+   `js/config.js`.
+
+No key is ever committed — it stays server-side. This whole site still runs
+for **zero cost** on GitHub Pages + Vercel's free tier.
+
 ## Why I started this
  
 I wanted to build GeePlays as a place to discover games. Browse a catalog, check requirements, watch trailers, and get sent to the actual official store to buy or download. Nothing fancy under the hood. Plain HTML, CSS, and JavaScript, hosted for free on GitHub Pages. No backend, no database, no build step. Just files.
@@ -72,11 +118,20 @@ But it was not "type a prompt, get a working site." I made the real decisions ab
 I think that is a fair way to describe it: assisted by AI, not replaced by AI. I could not have explained CORS, serverless functions, or environment variables in my own words before this project. I can now.
  
 ## The stack, for anyone curious
- 
+
 * HTML, CSS, and vanilla JavaScript. No frameworks, no build step.
 * GitHub Pages for free static hosting, straight from my repo.
 * The RAWG API as the live game database powering search and browsing.
-* Vercel for hosting the one serverless proxy function that makes the RAWG connection possible.
+* A hand-curated static catalog (`data/games.json`) as the offline fallback,
+  with official Steam artwork so cards never look broken.
+* Vercel for hosting the two serverless proxy functions (`/api`) that make the
+  RAWG and RSS connections possible.
 * Git and GitHub for version control, and the thing that actually pushes changes live.
+* A light/dark theme (saved to `localStorage`) and a "View on GitHub" link,
+  matching the rest of the Gee* family of sites.
+
+The UI design rules live in [DESIGN.md](./DESIGN.md) — dark, gaming-first,
+Windows-11 blue as the single accent, glass kept to the navbar and overlays.
+
 If you are building something similar and hit the same CORS wall I did, that is not a sign you are doing something wrong. It is just how browsers work, and a small proxy is the normal way around it.
  

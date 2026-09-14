@@ -6,6 +6,9 @@
 // server-side (where CORS doesn't apply), parses the RSS/XML, normalizes
 // every article into the shape GeePlays' UI expects, and returns JSON.
 //
+// IMPORTANT: this file must live at the ROOT of the Vercel project as
+// /api/news.js so Vercel deploys it as a serverless function at /api/news.
+//
 // This deliberately reads from each publisher's own official RSS feed
 // rather than scraping or republishing full articles: every article keeps
 // its real source name, a link back to the original, and only a short

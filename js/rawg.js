@@ -1,39 +1,21 @@
 /* =========================================================
-   GeePlays — RAWG live catalog integration
-   Calls a small proxy (see /rawg-proxy) instead of RAWG directly,
-   since RAWG's API doesn't support browser CORS requests.
-   Everything here fails quietly: if the proxy isn't configured yet,
-   or a request fails, callers just get an empty result instead of
-   a broken page.
+   GeePlays — RAWG live catalog client
+   ---------------------------------------------------------
+   Calls the small serverless proxy (see /api/rawg.js) instead
+   of RAWG directly, because RAWG's API does not send CORS
+   headers that a browser can read.
 
-   This module now powers full catalog browsing (games.html, the
-   homepage, and game.html) — not just the search box — so GeePlays
-   can show RAWG's whole 500,000+ game library instead of a small
-   hand-picked list.
+   Unlike the previous version, this module now *throws* on
+   failure. Callers should not call it directly — use the
+   catalog facade (js/catalog.js), which catches the failure
+   and transparently falls back to the local dataset.
    ========================================================= */
 
-// Deployed proxy (see /rawg-proxy). This will 500 until RAWG_API_KEY is
-// set in the Vercel project's Environment Variables — see the README.
-const RAWG_PROXY_BASE = "https://geeplays-rawg-proxy-isitgee.vercel.app/api/rawg";
-
-async function rawgFetch(path, params = {}) {
-  if (!RAWG_PROXY_BASE) return null; // proxy not configured yet
-  const url = new URL(RAWG_PROXY_BASE);
-  url.searchParams.set("path", path);
-  Object.entries(params).forEach(([k, v]) => {
-    if (v !== undefined && v !== null && v !== "") url.searchParams.set(k, v);
-  });
-  const res = await fetch(url.toString());
-  if (!res.ok) throw new Error(`RAWG proxy error ${res.status}`);
-  return res.json();
-}
+const RAWG_PROXY_BASE = window.GEEPLAYS_CONFIG.rawgProxy;
 
 /* ---------- Genre / platform / tag mappings ----------
-   GeePlays' genre chips map to RAWG's actual query vocabulary.
-   RAWG uses fixed genre slugs (action, adventure, rpg, etc.) plus a much
-   larger free-form "tags" vocabulary. A couple of GeePlays' genres
-   (Horror, Multiplayer) aren't canonical RAWG genres, so those go through
-   `tags` instead — the browse function below merges both transparently. */
+   GeePlays' genre chips map to RAWG's query vocabulary.
+   RAWG uses fixed genre slugs plus a free-form "tags" vocab. */
 
 const GENRE_QUERY_MAP = {
   "Action": { genres: "action" },
@@ -55,9 +37,7 @@ const PLATFORM_QUERY_MAP = {
   "Linux": "6"
 };
 
-// A fixed set of popular RAWG tags, offered as extra filter checkboxes
-// (RAWG's real tag list has thousands of free-form entries, so GeePlays
-// only surfaces a curated, useful subset here).
+// A curated subset of RAWG's free-form tags, offered as filter checkboxes.
 const BROWSE_TAGS = [
   "Singleplayer", "Co-op", "Open World", "Story Rich",
   "Atmospheric", "Great Soundtrack", "Difficult", "Funny",
@@ -78,21 +58,68 @@ const TAG_SLUG_MAP = {
   "Retro": "retro"
 };
 
-/* ---------- Public API ---------- */
+/* ---------- Small in-memory cache (no duplicate requests) ---------- */
+
+const _cache = new Map();
+
+function cacheGet(key) {
+  const hit = _cache.get(key);
+  if (!hit) return null;
+  if (Date.now() - hit.time > window.GEEPLAYS_CONFIG.cacheTtlMs) {
+    _cache.delete(key);
+    return null;
+  }
+  return hit.data;
+}
+
+function cacheSet(key, data) {
+  _cache.set(key, { time: Date.now(), data });
+  // Keep the cache from growing unbounded.
+  if (_cache.size > 200) {
+    const first = _cache.keys().next().value;
+    _cache.delete(first);
+  }
+}
+
+/* ---------- Low-level fetch ---------- */
+
+async function rawgFetch(path, params = {}) {
+  if (!RAWG_PROXY_BASE) throw new Error("No RAWG proxy configured.");
+
+  const url = new URL(RAWG_PROXY_BASE);
+  url.searchParams.set("path", path);
+  Object.entries(params).forEach(([k, v]) => {
+    if (v !== undefined && v !== null && v !== "") url.searchParams.set(k, v);
+  });
+
+  const key = url.toString();
+  const cached = cacheGet(key);
+  if (cached) return cached;
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), window.GEEPLAYS_CONFIG.requestTimeoutMs);
+
+  try {
+    const res = await fetch(key, { signal: controller.signal });
+    if (!res.ok) {
+      // 404 means the proxy deployment has no functions (or the path is
+      // wrong) — treat any non-OK as "live data unavailable".
+      throw new Error(`RAWG proxy error ${res.status}`);
+    }
+    const data = await res.json();
+    cacheSet(key, data);
+    return data;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/* ---------- Public API (throws on failure) ---------- */
 
 /**
- * Browse RAWG's catalog with GeePlays-shaped filters. Powers the homepage
- * sections, the Games page default listing, and search-within-filters.
- *
- * @param {object} opts
- * @param {string} [opts.search] - free text search
- * @param {string[]} [opts.genres] - GeePlays genre labels, e.g. ["Action"]
- * @param {string[]} [opts.platforms] - GeePlays platform labels
- * @param {string[]} [opts.tags] - GeePlays tag labels (from BROWSE_TAGS)
- * @param {string} [opts.ordering] - RAWG ordering param, default "-added"
- * @param {string} [opts.dates] - "YYYY-MM-DD,YYYY-MM-DD" release window
- * @param {number} [opts.page]
- * @param {number} [opts.pageSize]
+ * Browse RAWG's catalog with GeePlays-shaped filters.
+ * @returns {{results: object[], count: number, hasMore: boolean}}
+ * @throws on network/proxy failure.
  */
 async function rawgBrowse(opts = {}) {
   const {
@@ -127,18 +154,16 @@ async function rawgBrowse(opts = {}) {
   const tagSlugs = [...tagSlugsFromGenre, ...tags.map(t => TAG_SLUG_MAP[t]).filter(Boolean)];
   if (tagSlugs.length) params.tags = tagSlugs.join(",");
 
-  try {
-    const data = await rawgFetch("games", params);
-    if (!data || !data.results) return { results: [], count: 0, hasMore: false };
-    return {
-      results: data.results.map(normalizeRawgListItem),
-      count: data.count || 0,
-      hasMore: Boolean(data.next)
-    };
-  } catch (err) {
-    console.error("GeePlays: RAWG browse failed.", err);
-    return { results: [], count: 0, hasMore: false };
+  const data = await rawgFetch("games", params);
+  if (!data || !Array.isArray(data.results)) {
+    const message = (data && data.error) ? data.error : "Unexpected response from the game database.";
+    throw new Error(message);
   }
+  return {
+    results: data.results.map(normalizeRawgListItem),
+    count: data.count || 0,
+    hasMore: Boolean(data.next)
+  };
 }
 
 async function rawgSearch(query, pageSize = 8) {
@@ -146,21 +171,21 @@ async function rawgSearch(query, pageSize = 8) {
   return results;
 }
 
+/**
+ * Fetch a single game's full details.
+ * @returns {object|null} null when RAWG says the game doesn't exist.
+ * @throws on network/proxy failure.
+ */
 async function rawgGetGame(rawgId) {
-  try {
-    const [details, screenshotsRes, storesRes] = await Promise.all([
-      rawgFetch(`games/${rawgId}`),
-      rawgFetch(`games/${rawgId}/screenshots`).catch(() => null),
-      rawgFetch(`games/${rawgId}/stores`).catch(() => null)
-    ]);
-    if (!details || details.detail) return null; // RAWG returns {detail:"Not found."} on 404
-    const screenshots = (screenshotsRes && screenshotsRes.results) || [];
-    const stores = (storesRes && storesRes.results) || [];
-    return normalizeRawgDetail(details, screenshots, stores);
-  } catch (err) {
-    console.error("GeePlays: RAWG game lookup failed.", err);
-    return null;
-  }
+  const [details, screenshotsRes, storesRes] = await Promise.all([
+    rawgFetch(`games/${rawgId}`),
+    rawgFetch(`games/${rawgId}/screenshots`).catch(() => null),
+    rawgFetch(`games/${rawgId}/stores`).catch(() => null)
+  ]);
+  if (!details || details.detail) return null; // RAWG returns {detail:"Not found."} on 404
+  const screenshots = (screenshotsRes && screenshotsRes.results) || [];
+  const stores = (storesRes && storesRes.results) || [];
+  return normalizeRawgDetail(details, screenshots, stores);
 }
 
 /* ---------- Normalizers: RAWG shape -> GeePlays game shape ---------- */
