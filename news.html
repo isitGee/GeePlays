@@ -6,6 +6,29 @@
 <meta name="color-scheme" content="dark light">
 <title>News — GeePlays</title>
 <meta name="description" content="The latest gaming news, aggregated from official sources with full attribution and links to the original articles.">
+<meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#eef1f6" media="(prefers-color-scheme: light)">
+
+<!-- Canonical + social share preview.
+     Share image: assets/share/news.jpg (1200x630, ~67 KB).
+     Opening a single story (news.html?a=<slug>) rewrites these tags to that
+     article's own headline, summary and artwork — see js/news.js. -->
+<link rel="canonical" href="https://isitgee.github.io/GeePlays/news.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GeePlays">
+<meta property="og:title" content="Gaming News — Xbox, Nintendo, PlayStation &amp; PC">
+<meta property="og:description" content="Headlines from Xbox Wire, Nintendo Life, PlayStation Blog and PC Gamer, updated through the day. Every card links straight to the publisher's own article.">
+<meta property="og:url" content="https://isitgee.github.io/GeePlays/news.html">
+<meta property="og:image" content="https://isitgee.github.io/GeePlays/assets/share/news.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A stack of news cards, headed “Gaming News”.">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gaming News — Xbox, Nintendo, PlayStation &amp; PC">
+<meta name="twitter:description" content="Headlines from Xbox Wire, Nintendo Life, PlayStation Blog and PC Gamer, updated through the day. Every card links straight to the publisher's own article.">
+<meta name="twitter:image" content="https://isitgee.github.io/GeePlays/assets/share/news.jpg">
+<meta name="twitter:image:alt" content="A stack of news cards, headed “Gaming News”.">
 <link rel="stylesheet" href="./css/style.css">
 <script>
   (function () {
@@ -159,6 +182,7 @@
 </footer>
 
 <script src="./js/config.js"></script>
+<script src="./js/shareMeta.js"></script>
 <script src="./js/newsService.js"></script>
 <script src="./js/script.js"></script>
 <script src="./js/news.js"></script>

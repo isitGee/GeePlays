@@ -118,9 +118,22 @@ function makePaymentCard({ title, country, number, instructions, brand, copyLabe
   const logo = document.createElement("div");
   logo.className = `brand-logo ${brand.logoClass}`;
   const logoImg = document.createElement("img");
-  logoImg.src = brand.logoSrc;
   logoImg.alt = brand.logoAlt || title;
   logoImg.loading = "lazy";
+  logoImg.decoding = "async";
+  // The three payment logos are tall-ish marks; declaring a ratio stops the
+  // card reflowing a beat after first paint.
+  logoImg.width = 220;
+  logoImg.height = 88;
+  logoImg.src = brand.logoSrc;
+  logoImg.onerror = () => {
+    // A missing logo must not leave a broken-image icon on a payment card.
+    logoImg.remove();
+    const wordmark = document.createElement("span");
+    wordmark.className = "brand-logo-wordmark";
+    wordmark.textContent = title;
+    logo.appendChild(wordmark);
+  };
   logo.appendChild(logoImg);
 
   const tag = document.createElement("span");

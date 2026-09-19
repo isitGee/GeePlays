@@ -4,8 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="dark light">
-<title id="pageTitle">Game — GeePlays</title>
+<title id="pageTitle">Game Details — GeePlays</title>
 <meta name="description" content="Game details, requirements, screenshots and gameplay on GeePlays.">
+<meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#eef1f6" media="(prefers-color-scheme: light)">
+
+<!-- Canonical + social share preview.
+     This page renders at runtime, so these are the *defaults* — js/game.js
+     rewrites every one of them (title, description, image, url) as soon as
+     the game is known, via js/shareMeta.js, so a shared per-game link
+     unfurls with that game's own name, genre and artwork.
+     Share image: assets/share/game.jpg (1200x630, ~53 KB). -->
+<link rel="canonical" href="https://isitgee.github.io/GeePlays/game.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="GeePlays">
+<meta property="og:title" content="Game Details — GeePlays">
+<meta property="og:description" content="Screenshots, PC requirements, ratings and platforms for any game in the catalog — plus a direct link to where you can get it.">
+<meta property="og:url" content="https://isitgee.github.io/GeePlays/game.html">
+<meta property="og:image" content="https://isitgee.github.io/GeePlays/assets/share/game.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A game cover standing above a row of screenshots, headed “Every game, in detail.”">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Game Details — GeePlays">
+<meta name="twitter:description" content="Screenshots, PC requirements, ratings and platforms for any game in the catalog — plus a direct link to where you can get it.">
+<meta name="twitter:image" content="https://isitgee.github.io/GeePlays/assets/share/game.jpg">
+<meta name="twitter:image:alt" content="A game cover standing above a row of screenshots, headed “Every game, in detail.”">
 <link rel="stylesheet" href="./css/style.css">
 <script>
   (function () {
@@ -142,14 +167,19 @@
 </main>
 
 <!-- Lightbox -->
-<div class="lightbox" id="lightbox">
-  <button class="icon-btn lightbox-close" id="lightboxClose" aria-label="Close">
+<!-- Screenshot viewer. The <img> carries no src until a screenshot is
+     opened — an empty src makes browsers re-request the page itself. -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true"
+     aria-label="Screenshot viewer" aria-hidden="true" tabindex="-1">
+  <button class="icon-btn lightbox-close" id="lightboxClose" aria-label="Close screenshot viewer">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
   </button>
   <button class="icon-btn lightbox-nav prev" id="lightboxPrev" aria-label="Previous screenshot">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
   </button>
-  <img src="" alt="" id="lightboxImg">
+  <!-- The enlarged image is created by js/game.js when a screenshot is
+       opened — a permanently empty <img> here would be a broken image in
+       every page load for anyone who never opens the viewer. -->
   <button class="icon-btn lightbox-nav next" id="lightboxNext" aria-label="Next screenshot">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
   </button>
@@ -192,6 +222,7 @@
 </footer>
 
 <script src="./js/config.js"></script>
+<script src="./js/shareMeta.js"></script>
 <script src="./js/rawg.js"></script>
 <script src="./js/localCatalog.js"></script>
 <script src="./js/catalog.js"></script>

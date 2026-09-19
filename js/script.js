@@ -34,17 +34,33 @@ function buildCoverEl(src, title, extraClass) {
   const wrap = document.createElement("div");
   wrap.className = "cover" + (extraClass ? " " + extraClass : "");
 
-  const img = document.createElement("img");
-  img.src = src;
-  img.alt = `${title} cover art`;
-  img.loading = "lazy";
-  img.decoding = "async";
-  img.onerror = () => {
+  const url = typeof src === "string" ? src.trim() : "";
+
+  function renderFallback() {
     const fallback = document.createElement("div");
     fallback.className = `cover-fallback pal-${paletteIndex(title)}`;
     fallback.innerHTML = `<span class="initial">${escapeHtml(coverInitials(title))}</span>`;
     wrap.replaceChildren(fallback);
-  };
+  }
+
+  if (!url) {
+    // Nothing to load — show the branded placeholder straight away rather
+    // than assigning an empty src (browsers would request the page itself).
+    renderFallback();
+    return wrap;
+  }
+
+  const img = document.createElement("img");
+  img.alt = `${title} cover art`;
+  img.loading = "lazy";
+  img.decoding = "async";
+  // Covers are a 3/4 ratio in the grid; declaring it keeps the grid from
+  // reflowing as artwork streams in.
+  img.width = 300;
+  img.height = 400;
+  img.referrerPolicy = "no-referrer";
+  img.onerror = renderFallback;
+  img.src = url;
   wrap.appendChild(img);
   return wrap;
 }
@@ -212,14 +228,23 @@ function initTheme() {
   }
 
   // Match the mobile browser chrome to the active theme.
+  //
+  // Every page ships two media-scoped theme-color metas — one per OS colour
+  // preference — so the correct colour is used before any JS runs. Once the
+  // visitor picks a theme by hand, BOTH are set to that theme's colour, so an
+  // explicit choice always wins over the operating system's preference.
   function updateThemeColor(theme) {
-    let meta = document.querySelector('meta[name="theme-color"]');
-    if (!meta) {
-      meta = document.createElement("meta");
+    const color = theme === "light" ? "#eef1f6" : "#0f1115";
+    const metas = document.querySelectorAll('meta[name="theme-color"]');
+
+    if (!metas.length) {
+      const meta = document.createElement("meta");
       meta.name = "theme-color";
+      meta.content = color;
       document.head.appendChild(meta);
+      return;
     }
-    meta.content = theme === "light" ? "#eef1f6" : "#0f1115";
+    metas.forEach(meta => { meta.content = color; });
   }
 
   // The inline <head> script already set the initial theme.

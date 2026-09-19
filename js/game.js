@@ -67,6 +67,12 @@
   content.style.display = "block";
   document.getElementById("pageTitle").textContent = `${game.title} — GeePlays`;
 
+  /* ---------- Share preview for this game ----------
+     Every tag in the <head> was written for the page in general. Now that
+     the real game is known, they are rewritten so that sharing the link
+     unfurls with *this* game's name, genre and artwork. */
+  applyGameShareMeta(game);
+
   // Subtle note when this is a saved pick (live data unavailable).
   if (degraded && game.source === "local") {
     const hero = document.querySelector(".game-hero");
@@ -81,17 +87,28 @@
 
   /* ---------- Hero banner (falls back to gradient cover) ---------- */
   const bannerBg = document.getElementById("bannerBg");
-  const bannerImg = new Image();
-  bannerImg.onload = () => bannerBg.appendChild(bannerImg);
-  bannerImg.onerror = () => {
+  const bannerSrc = (game.banner || game.cover || "").trim();
+
+  function renderBannerFallback() {
     const fb = document.createElement("div");
     fb.className = `cover-fallback pal-${paletteIndex(game.title)}`;
     fb.style.height = "100%";
     fb.innerHTML = `<span class="initial" style="font-size:22px;">${escapeHtml(coverInitials(game.title))}</span>`;
     bannerBg.appendChild(fb);
-  };
-  bannerImg.src = game.banner || game.cover;
-  bannerImg.alt = `${game.title} banner`;
+  }
+
+  if (!bannerSrc) {
+    // No artwork at all: go straight to the branded cover instead of
+    // assigning an empty src (which makes browsers re-request the page).
+    renderBannerFallback();
+  } else {
+    const bannerImg = new Image();
+    bannerImg.decoding = "async";
+    bannerImg.onload = () => bannerBg.appendChild(bannerImg);
+    bannerImg.onerror = renderBannerFallback;
+    bannerImg.alt = `${game.title} banner artwork`;
+    bannerImg.src = bannerSrc;
+  }
 
   /* ---------- Hero content ---------- */
   document.getElementById("gameTitle").textContent = game.title;
@@ -161,10 +178,13 @@
       const thumb = document.createElement("div");
       thumb.className = "screen-thumb";
       const img = document.createElement("img");
-      img.src = src;
       img.alt = `${game.title} screenshot ${i + 1}`;
       img.loading = "lazy";
       img.decoding = "async";
+      img.width = 480;
+      img.height = 270;
+      img.referrerPolicy = "no-referrer";
+      img.src = src;
       img.onerror = () => {
         const fb = document.createElement("div");
         fb.className = `cover-fallback pal-${(paletteIndex(game.title) + i + 1) % 6}`;
@@ -187,15 +207,32 @@
     });
 
     const lightbox = document.getElementById("lightbox");
-    const lightboxImg = document.getElementById("lightboxImg");
+
+    // Built on demand: no empty <img src> is left sitting in the page.
+    const lightboxImg = document.createElement("img");
+    lightboxImg.id = "lightboxImg";
+    lightboxImg.alt = "";
+    lightboxImg.decoding = "async";
+    lightboxImg.hidden = true;
+    lightbox.insertBefore(lightboxImg, document.getElementById("lightboxNext"));
 
     function openLightbox(i) {
       lightboxIndex = i;
       lightboxImg.src = screenshots[i];
-      lightboxImg.alt = `${game.title} screenshot ${i + 1}`;
+      lightboxImg.alt = `${game.title} screenshot ${i + 1}, enlarged`;
+      lightboxImg.hidden = false;
       lightbox.classList.add("open");
+      lightbox.setAttribute("aria-hidden", "false");
+      // Move focus into the viewer so keyboard and screen-reader users land
+      // where the action is; Esc, arrows and the close button all work there.
+      document.getElementById("lightboxClose").focus();
     }
-    function closeLightbox() { lightbox.classList.remove("open"); }
+    function closeLightbox() {
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+      const opener = screensGrid.querySelectorAll(".screen-thumb")[lightboxIndex];
+      if (opener) opener.focus();
+    }
     function stepLightbox(delta) {
       lightboxIndex = (lightboxIndex + delta + screenshots.length) % screenshots.length;
       openLightbox(lightboxIndex);
@@ -279,6 +316,49 @@
     row.innerHTML = `<span class="k">${escapeHtml(k)}</span><span class="v">${escapeHtml(v || "—")}</span>`;
     infoRows.appendChild(row);
   });
+
+  /* ---------- Share preview tags for this exact game ---------- */
+
+  function applyGameShareMeta(g) {
+    if (!window.GeePlaysShare) return;
+
+    // The canonical form of this page keeps the game reference and nothing
+    // else, so the URL a visitor copies is the URL advertised in og:url.
+    const params = rawgId ? { rawg: rawgId } : id ? { id: id } : {};
+    const url = GeePlaysShare.canonical("game.html", params);
+
+    try {
+      if (window.location.href !== url) window.history.replaceState(null, "", url);
+    } catch (e) {
+      // history is restricted in some embedded browsers — the page is fine.
+    }
+
+    // One specific, human sentence about this game — built from its own
+    // title, developer, release year, genre and platform list.
+    const genre = (g.genre || []).filter(Boolean).slice(0, 2).join(" · ");
+    const developer = (g.developer && g.developer !== "Unknown") ? g.developer : "";
+    const year = (g.releaseDate || "").slice(0, 4);
+    const platforms = (g.platforms || []).filter(Boolean).slice(0, 3).join(" / ");
+
+    const headline = g.title +
+      (developer ? ` by ${developer}` : "") +
+      (year ? ` (${year})` : "") +
+      (genre ? ` — ${genre}` : "") + ".";
+
+    const detail = platforms
+      ? `See screenshots, system requirements and ratings, plus where to get it on ${platforms}, on GeePlays.`
+      : "See screenshots, system requirements, ratings and where to get it on GeePlays.";
+
+    GeePlaysShare.applyWithVerifiedImage({
+      title: `${g.title} — GeePlays`,
+      description: `${headline} ${detail}`,
+      image: g.banner || g.cover,
+      imageAlt: `${g.title} cover artwork`,
+      fallbackImage: GeePlaysShare.canonical("assets/share/game.jpg"),
+      url,
+      type: "article"
+    });
+  }
 
   /* ---------- Helpers ---------- */
 

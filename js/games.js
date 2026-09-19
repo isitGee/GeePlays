@@ -193,5 +193,46 @@
     };
   }
 
+  /* ---------- Share preview for a filtered view ----------
+     A genre or search link (games.html?genre=Horror, ?search=hades) is a
+     link people actually share, so the tags should describe what the page
+     is showing rather than the whole catalog. The URL in the address bar is
+     normalised to the same canonical form at the same time. */
+  function syncShareMeta() {
+    if (!window.GeePlaysShare) return;
+
+    const genre = [...state.genres][0] || "";
+    const search = state.search || "";
+    if (!genre && !search) {
+      // Plain catalog — the HTML already carries the right tags.
+      return;
+    }
+
+    const params = genre ? { genre } : { search };
+    const url = GeePlaysShare.canonical("games.html", params);
+    try {
+      if (window.location.href !== url) window.history.replaceState(null, "", url);
+    } catch (e) {
+      // History is restricted in some embedded browsers — harmless.
+    }
+
+    const title = genre
+      ? `${genre} Games — Browse the GeePlays Catalog`
+      : `“${search}” — GeePlays Catalog Search`;
+    const description = genre
+      ? `Every ${genre.toLowerCase()} game in the GeePlays catalog, live from RAWG — artwork first, with ratings, platforms and a detail page behind each one.`
+      : `Search results for “${search}” across the GeePlays catalog, live from RAWG — artwork first, with ratings and platforms for each game.`;
+
+    GeePlaysShare.apply({
+      title,
+      description,
+      image: GeePlaysShare.canonical("assets/share/games.jpg"),
+      imageAlt: `GeePlays catalog — ${genre ? genre + " games" : search}`,
+      url,
+      type: "website"
+    });
+  }
+
   refresh();
+  syncShareMeta();
 })();

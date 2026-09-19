@@ -100,16 +100,92 @@ function normalizeItem(item, feed) {
   };
 }
 
+/**
+ * Pick the best real <img>-able picture for an article.
+ *
+ * Two upstream traps this deliberately avoids (both seen in the wild on the
+ * feeds GeePlays reads):
+ *   1. Video enclosures. PlayStation Blog attaches `video/mp4` enclosures to
+ *      trailer posts — taken blindly, that URL lands in an <img>, so the card
+ *      is broken *and* the browser is asked for a ~21 MB video it can never
+ *      render. Only `image/*` assets are ever considered.
+ *   2. HTML entities inside URLs. Xbox Wire writes `&#x2122;` for ™ inside
+ *      its image filenames; used literally the request 404s, so entities are
+ *      decoded before the URL is resolved and re-encoded.
+ *
+ * Candidates are tried in order of trustworthiness: an image enclosure /
+ * media asset first, then every <img> in the article body.
+ */
 function extractImage(item, feed) {
-  const enclosure = item.enclosure && item.enclosure.url;
-  if (enclosure) return safeImageUrl(enclosure, feed);
-  if (item.mediaContent && item.mediaContent.$ && item.mediaContent.$.url) {
-    return safeImageUrl(item.mediaContent.$.url, feed);
-  }
+  const candidates = [];
+  collectMedia(candidates, item.enclosure);
+  collectMedia(candidates, item.mediaContent);
+  collectMedia(candidates, item.mediaThumbnail);
+
   const html = item.contentEncoded || item.content || "";
-  // Some feeds use double quotes, some single — match both.
-  const match = html.match(/<img[^>]+src=["']([^"']+)["']/i);
-  return match ? safeImageUrl(match[1], feed) : "";
+  // Some feeds use double quotes, some single — match both. Every <img> in
+  // document order, so an exact first-choice image is still preferred.
+  for (const match of html.matchAll(/<img[^>]+src=["']([^"']+)["']/gi)) {
+    candidates.push({ url: match[1] });
+  }
+  // A few feeds inline their og:image as a meta tag instead.
+  for (const match of html.matchAll(/<meta[^>]+(?:property|name)=["']og:image["'][^>]+content=["']([^"']+)["']/gi)) {
+    candidates.push({ url: match[1] });
+  }
+
+  for (const candidate of candidates) {
+    // An explicit non-image type (video/mp4, audio/…) is never an <img>.
+    if (candidate.type && !/^image\//i.test(candidate.type)) continue;
+    const url = safeImageUrl(decodeEntities(candidate.url), feed);
+    if (!url) continue;
+    // Even inside an <img> tag, a video file is a video file.
+    if (VIDEO_EXT.test(url)) continue;
+    return url;
+  }
+  return "";
+}
+
+/** Normalize one rss-parser media shape (object, array, or { $: {…} }). */
+function collectMedia(out, media) {
+  if (!media) return;
+  if (Array.isArray(media)) {
+    media.forEach(m => collectMedia(out, m));
+    return;
+  }
+  const url = media.url || (media.$ && media.$.url);
+  if (!url) return;
+  const type = media.type || (media.$ && media.$.type) || "";
+  out.push({ url, type });
+}
+
+const VIDEO_EXT = /\.(mp4|m4v|mov|webm|ogv|avi|mkv|m3u8|mpd|ts)(\?|#|$)/i;
+
+/**
+ * Decode HTML entities that appear *inside* an extracted URL
+ * (`&#x2122;`, `&amp;`, …). Without this, Xbox Wire's `…FC™-27_Social…jpg`
+ * becomes a literal `&#x2122;` in the request and 404s. `&amp;` is decoded
+ * last so an encoded ampersand is not double-decoded.
+ */
+function decodeEntities(str) {
+  return String(str)
+    .replace(/&#x([0-9a-f]{1,6});/gi, (_, hex) => codePoint(parseInt(hex, 16)))
+    .replace(/&#(\d{1,7});/g, (_, dec) => codePoint(parseInt(dec, 10)))
+    .replace(/&quot;/gi, '"')
+    .replace(/&apos;|&#0?39;/gi, "'")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&");
+}
+
+function codePoint(value) {
+  if (!Number.isFinite(value) || value < 0 || value > 0x10ffff) return "";
+  if (value >= 0xd800 && value <= 0xdfff) return ""; // lone surrogate
+  try {
+    return String.fromCodePoint(value);
+  } catch {
+    return "";
+  }
 }
 
 /**
@@ -123,6 +199,8 @@ function safeImageUrl(src, feed) {
   if (!src) return "";
   const candidate = String(src).trim();
   if (/^(data|javascript|blob|vbscript):/i.test(candidate)) return "";
+  // An <img> in the markup whose src is a page, not a picture.
+  if (/(youtube\.com|youtu\.be|vimeo\.com)\//i.test(candidate) && !/\.(jpe?g|png|gif|webp|avif)(\?|$)/i.test(candidate)) return "";
   if (/^\/\//i.test(candidate)) return "https:" + candidate;
   if (/^https?:\/\//i.test(candidate)) {
     try { return new URL(candidate).href; } catch { return ""; }

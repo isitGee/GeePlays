@@ -6,6 +6,29 @@
 <meta name="color-scheme" content="dark light">
 <title>GeePlays — Discover What to Play Next</title>
 <meta name="description" content="GeePlays is a gaming discovery hub — browse games, check requirements, view screenshots, watch gameplay, and find where to get them.">
+<meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#eef1f6" media="(prefers-color-scheme: light)">
+
+<!-- Canonical + social share preview.
+     Share image: assets/share/index.jpg (1200x630, ~66 KB).
+     Fallback used by the runtime helper when a page image is missing:
+     assets/share/default.jpg -->
+<link rel="canonical" href="https://isitgee.github.io/GeePlays/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GeePlays">
+<meta property="og:title" content="GeePlays — Discover What to Play Next">
+<meta property="og:description" content="Find your next obsession. Browse the catalog by genre, check specs before you buy, flip through screenshots, and watch real gameplay — then jump straight to the official store.">
+<meta property="og:url" content="https://isitgee.github.io/GeePlays/">
+<meta property="og:image" content="https://isitgee.github.io/GeePlays/assets/share/index.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="GeePlays — a fan of game cover art behind the words “Find your next obsession.”">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GeePlays — Discover What to Play Next">
+<meta name="twitter:description" content="Find your next obsession. Browse the catalog by genre, check specs before you buy, flip through screenshots, and watch real gameplay — then jump straight to the official store.">
+<meta name="twitter:image" content="https://isitgee.github.io/GeePlays/assets/share/index.jpg">
+<meta name="twitter:image:alt" content="GeePlays — a fan of game cover art behind the words “Find your next obsession.”">
 <link rel="stylesheet" href="./css/style.css">
 <script>
   // Apply the saved theme before first paint to avoid a flash.
@@ -85,7 +108,12 @@
        Light gradient fade (not a glass card) so the video reads clearly. -->
   <section class="hero">
     <div class="hero-media" aria-hidden="true">
-      <img class="hero-poster" src="./assets/hero-poster.jpg" alt="">
+      <!-- Decorative backdrop: the poster is the first thing painted (and the
+           only thing shown on small screens / reduced motion), so it is
+           declared with its real 1280x720 size and given loading priority. -->
+      <img class="hero-poster" src="./assets/hero-poster.jpg" width="1280" height="720"
+           fetchpriority="high" decoding="async"
+           alt="A wall of dark game artwork lit by a blue accent — the GeePlays hero backdrop.">
       <!-- 1.9 MB, 720p H.264 +faststart: first frame streams in fast,
            poster (same 720p frame) shows instantly while it buffers. -->
       <video

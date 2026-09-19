@@ -5,7 +5,7 @@
   "description": "GeePlays — a gaming discovery hub. Static site (GitHub Pages) plus optional serverless proxies (Vercel) for the RAWG API and gaming-news RSS feeds.",
   "scripts": {
     "serve": "python3 -m http.server 8080",
-    "check:js": "node --check js/script.js && node --check js/config.js && node --check js/rawg.js && node --check js/localCatalog.js && node --check js/catalog.js && node --check js/home.js && node --check js/games.js && node --check js/game.js && node --check js/newsService.js && node --check js/news.js && node --check js/support.js"
+    "check:js": "node --check js/script.js && node --check js/config.js && node --check js/shareMeta.js && node --check js/rawg.js && node --check js/localCatalog.js && node --check js/catalog.js && node --check js/home.js && node --check js/games.js && node --check js/game.js && node --check js/newsService.js && node --check js/news.js && node --check js/support.js"
   },
   "dependencies": {
     "rss-parser": "^3.13.0"
