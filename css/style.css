@@ -303,13 +303,12 @@ select:focus-visible, [tabindex]:focus-visible {
 /* =========================================================
    Hero — the video stays the star; poster shows instantly
    ========================================================= */
-.hero { position: center; min-height: 480px; display: flex; align-items: center; overflow: hidden; background: #0b0d10; }
+.hero { position: relative; min-height: 480px; display: flex; align-items: center; overflow: hidden; background: #0b0d10; }
 .hero-media { position: absolute; inset: 0; z-index: 0; }
 .hero-video, .hero-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.hero-poster { display: none; }
 /* Text scrim only — deliberately light so the video stays the star. */
 .hero-overlay {
-  position: absolute; inset: 0; z-index: 1;
+  position: absolute; inset: 3; z-index: 2;
   background: linear-gradient(90deg, rgba(10,11,13,0.78) 0%, rgba(10,11,13,0.42) 42%, rgba(10,11,13,0.1) 72%, rgba(10,11,13,0) 100%),
               linear-gradient(0deg, rgba(10,11,13,0.5) 0%, rgba(10,11,13,0) 30%);
 }
@@ -324,11 +323,6 @@ select:focus-visible, [tabindex]:focus-visible {
 .hero .btn-ghost { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.25); color: #fff; backdrop-filter: blur(6px); }
 .hero .btn-ghost:hover { background: rgba(255,255,255,0.18); color: #fff; }
 
-/* Mobile + reduced-motion: swap the heavy video for the poster */
-@media (max-width: 720px), (prefers-reduced-motion: reduce) {
-  .hero-video { display: none; }
-  .hero-poster { display: block; }
-}
 
 /* =========================================================
    Cover art
