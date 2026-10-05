@@ -362,9 +362,25 @@
       img.height = 450;
       img.referrerPolicy = "no-referrer";
       img.onerror = () => {
-        // Publisher image failed (blocked, moved, or offline): the card
-        // keeps its shape with the branded placeholder instead of a
-        // broken-image icon.
+        // One retry with a cache-buster before giving up. A single
+        // transient failure (flaky connection, a CDN error response
+        // cached by the browser/edge, a momentary 403) must not pin the
+        // gradient placeholder on the card forever — the old code
+        // replaced the <img> on the very first error with no retry.
+        if (!img.dataset.retried) {
+          img.dataset.retried = "1";
+          try {
+            const u = new URL(img.src);
+            u.searchParams.set("gp", Date.now().toString(36));
+            img.src = u.href;
+            return;
+          } catch (_) {
+            /* unparseable src — fall through to the placeholder */
+          }
+        }
+        // Publisher image genuinely failed (blocked, moved, or offline):
+        // the card keeps its shape with the branded placeholder instead
+        // of a broken-image icon.
         img.replaceWith(buildPlaceholder(article));
       };
       img.src = src;
