@@ -20,7 +20,7 @@ third-party API fails:
 
 When I checked the deployed proxy at
 `geeplays-rawg-proxy-isitgee.vercel.app/api/rawg`, it returned Vercel's
-`404 NOT_FOUND` — and the root of that domain now serves *this static site*.
+`404 NOT_FOUND` and the root of that domain now serves *this static site*.
 The proxy functions had been written into a subfolder
 (`geeplays-proxy-with-news/api/`) instead of the project-root `api/`, so when
 the repo was deployed to Vercel the functions were never picked up. RAWG
@@ -58,7 +58,7 @@ the proxy) can read. The fix, in `api/rawg.js`:
 
 - `next` / `previous` are **scrubbed server-side** and replaced with plain
   booleans (the frontend only ever needs "are there more pages?").
-- Non-OK responses are replaced with a small generic error object — the
+- Non-OK responses are replaced with a small generic error object the
   upstream body is never forwarded verbatim, so nothing upstream can ever
   sneak a secret or a scary message to a visitor.
 - Error responses get `Cache-Control: no-store` so a transient 429/5xx
@@ -77,7 +77,7 @@ the proxy) can read. The fix, in `api/rawg.js`:
   720p poster frame. The poster shows instantly, and the (now tiny) file
   starts playing fast instead of sitting on a spinner. The glass overlay
   over the video was lightened so the footage actually reads.
-- **Payment cards are now full-surface brand cards** each card's
+- **Payment cards are now full surface brand cards** each card's
   background is the exact dominant color sampled from its logo file (PIL):
   Vodacom `#E90004` red, Airtel `#FFFFFF` white (red `#E20010` "Pay Now"),
   NMB `#2056AE` blue. The logo sits on the card with no box or border, so
@@ -89,7 +89,7 @@ the proxy) can read. The fix, in `api/rawg.js`:
   URLs from RSS feeds and skips `data:` URIs; the UI only ever tries
   absolute `http(s)` images and falls back to a placeholder that matches
   the card surface, so a dead external image never leaves a broken card.
-- **Game detail page** — "game doesn't exist" (404 from RAWG) is now told
+- **Game detail page** "game doesn't exist" (404 from RAWG) is now told
   apart from "proxy is down", so a deleted game shows a proper
   not-found state instead of a false "live data offline" banner.
 - Light/dark theme syncs the mobile browser chrome color too
@@ -163,14 +163,14 @@ the real content is known (`js/shareMeta.js`, driven by `js/game.js`,
   `og:url` advertises, so what someone copies is what gets previewed.
 
 **One honest limitation.** The big unfurlers WhatsApp, Discord, Facebook,
-Slack — read the HTML and do **not** run JavaScript. On a static GitHub Pages
+Slack read the HTML and do **not** run JavaScript. On a static GitHub Pages
 site with no build step there is nothing server-side to render per-game meta,
 so a per-game link previews with the generic game card
 (`assets/share/game.jpg`) and a per-story link with the news card. The
 runtime rewrite covers everything that does run JS (browsers, and previewers
 that execute scripts). If per-game previews for every unfurler ever matter
 enough, the zero-cost path is a tiny Vercel function that returns HTML with
-the right tags for crawlers — the same free project the proxies already use.
+the right tags for crawlers the same free project the proxies already use.
 
 ### News images: two real bugs in the proxy, found and fixed
 
@@ -184,7 +184,7 @@ and two upstream traps turned up in `api/news.js`:
    considered now.
 2. **HTML entities inside URLs.** Xbox Wire writes `&#x2122;` for ™ inside
    its image filenames. Used literally, the request 404s. URLs are now
-   entity-decoded before they are resolved and re-encoded.
+   entity-decoded before they are resolved and re encoded.
 
 Verified against the live feeds: **37 of 37 extracted images resolve as real
 images**, no video URLs, no entities left. Stories whose source has no usable
@@ -306,7 +306,7 @@ I think that is a fair way to describe it: assisted by AI, not replaced by AI. I
 * A light/dark theme (saved to `localStorage`) and a "View on GitHub" link,
   matching the rest of the Gee* family of sites.
 
-The UI design rules live in [DESIGN.md](./DESIGN.md) — dark, gaming-first,
+The UI design rules live in [DESIGN.md](./DESIGN.md) dark, gaming-first,
 Windows-11 blue as the single accent, glass kept to the navbar and overlays.
 
 If you are building something similar and hit the same CORS wall I did, that is not a sign you are doing something wrong. It is just how browsers work, and a small proxy is the normal way around it.
