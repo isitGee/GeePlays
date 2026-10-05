@@ -123,7 +123,7 @@
       tags: [...state.tags],
       ordering: state.search ? undefined : "-added",
       page,
-      pageSize: 24
+      pageSize: 50
     });
   }
 
