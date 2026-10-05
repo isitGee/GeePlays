@@ -36,8 +36,8 @@ const FEEDS = [
   { url: "https://www.pcgamer.com/rss/", source: "PC Gamer", category: "PC" }
 ];
 
-const ARTICLES_PER_FEED = 10;
-const MAX_ARTICLES = 40;
+const ARTICLES_PER_FEED = 20;
+const MAX_ARTICLES = 60;
 
 module.exports = async (req, res) => {
   const allowedOrigin = process.env.ALLOWED_ORIGIN || "*";
